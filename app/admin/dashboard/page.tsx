@@ -24,20 +24,20 @@ export default async function AdminDashboardPage() {
     },
   });
 
-  const allProblems = topics.flatMap((t) =>
-    t.subTopics.flatMap((st) => st.problems)
+  const allProblems = topics.flatMap((t: any) =>
+    t.subTopics.flatMap((st: any) => st.problems)
   );
 
   const total = allProblems.length;
-  const completed = allProblems.filter((p) => p.completed).length;
+  const completed = allProblems.filter((p: any) => p.completed).length;
   const remaining = total - completed;
   const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
 
   // 1. Completion by Topic Data
-  const completionByTopic = topics.map((t) => {
-    const problems = t.subTopics.flatMap((st) => st.problems);
+  const completionByTopic = topics.map((t: any) => {
+    const problems = t.subTopics.flatMap((st: any) => st.problems);
     const totalP = problems.length;
-    const completedP = problems.filter((p) => p.completed).length;
+    const completedP = problems.filter((p: any) => p.completed).length;
     return {
       name: t.name,
       completed: completedP,
@@ -48,7 +48,7 @@ export default async function AdminDashboardPage() {
 
   // 2. Problems by Rating Data
   const ratingMap: Record<number, number> = {};
-  allProblems.forEach((p) => {
+  allProblems.forEach((p: any) => {
     ratingMap[p.rating] = (ratingMap[p.rating] || 0) + 1;
   });
 
@@ -138,7 +138,7 @@ export default async function AdminDashboardPage() {
         <CardContent>
           {recentCompletions.length > 0 ? (
             <div className="divide-y divide-zinc-900">
-              {recentCompletions.map((p) => (
+              {recentCompletions.map((p: any) => (
                 <div key={p.id} className="py-3 flex justify-between items-center text-xs">
                   <div>
                     <h5 className="font-semibold text-zinc-200">{p.problem}</h5>

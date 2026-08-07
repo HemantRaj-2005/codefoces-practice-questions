@@ -25,15 +25,15 @@ export default async function Page() {
   });
 
   // Calculate statistics
-  const allProblems = topics.flatMap((t) =>
-    t.subTopics.flatMap((st) => st.problems)
+  const allProblems = topics.flatMap((t: any) =>
+    t.subTopics.flatMap((st: any) => st.problems)
   );
 
   const total = allProblems.length;
-  const completed = allProblems.filter((p) => p.completed).length;
+  const completed = allProblems.filter((p: any) => p.completed).length;
   const remaining = total - completed;
   const topicsCount = topics.length;
-  const subtopicsCount = topics.reduce((acc, t) => acc + t.subTopics.length, 0);
+  const subtopicsCount = topics.reduce((acc: number, t: any) => acc + t.subTopics.length, 0);
   const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
 
   const stats = {

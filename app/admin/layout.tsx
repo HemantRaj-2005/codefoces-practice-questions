@@ -21,7 +21,7 @@ export default async function AdminLayout({
   });
 
   const total = problems.length;
-  const completed = problems.filter((p) => p.completed).length;
+  const completed = problems.filter((p: any) => p.completed).length;
   const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
 
   return (

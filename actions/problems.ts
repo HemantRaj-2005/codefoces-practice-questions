@@ -208,7 +208,7 @@ export async function uploadCSV(subTopicId: string, csvDataString: string) {
 
   // Get existing problem links from database
   const existingLinks = new Set(
-    (await db.problem.findMany({ select: { link: true } })).map((p) => p.link)
+    (await db.problem.findMany({ select: { link: true } })).map((p: any) => p.link)
   );
 
   // Track duplicates within the CSV itself to avoid primary key collisions in the transaction
