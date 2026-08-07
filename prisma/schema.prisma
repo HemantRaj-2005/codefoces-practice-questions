@@ -1,0 +1,43 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Topic {
+  id         String      @id @default(cuid())
+  name       String
+  order      Int
+  subTopics  SubTopic[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+model SubTopic {
+  id         String      @id @default(cuid())
+  topicId    String
+  topic      Topic       @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  name       String
+  order      Int
+  problems   Problem[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+model Problem {
+  id            String    @id @default(cuid())
+  subTopicId    String
+  subTopic      SubTopic  @relation(fields: [subTopicId], references: [id], onDelete: Cascade)
+  problem       String
+  rating        Int
+  mainTopic     String
+  hiddenPattern String?
+  link          String    @unique
+  completed     Boolean   @default(false)
+  completedAt   DateTime?
+  notes         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
