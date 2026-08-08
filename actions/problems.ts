@@ -250,7 +250,6 @@ export async function uploadCSV(subTopicId: string, csvDataString: string) {
       hiddenPattern: problemData["Hidden Pattern"] || null,
       link,
       completed: false,
-      completedAt: null,
       notes: null,
     });
   }
