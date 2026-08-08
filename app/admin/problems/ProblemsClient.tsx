@@ -36,7 +36,6 @@ interface Problem {
   hiddenPattern: string | null;
   link: string;
   completed: boolean;
-  completedAt: Date | null;
   notes: string | null;
   createdAt: Date;
   updatedAt: Date;

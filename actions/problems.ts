@@ -48,7 +48,6 @@ export async function createProblem(data: {
       link: validated.link,
       notes: validated.notes || null,
       completed: false,
-      completedAt: null,
     },
   });
 
@@ -137,13 +136,10 @@ export async function bulkDeleteProblems(ids: string[]) {
 
 export async function toggleProblemCompletion(id: string, completed: boolean) {
   // Since the user is tracking their own progress, we do not require authentication here.
-  const completedAt = completed ? new Date() : null;
-
   const problem = await db.problem.update({
     where: { id },
     data: {
       completed,
-      completedAt,
     },
   });
 

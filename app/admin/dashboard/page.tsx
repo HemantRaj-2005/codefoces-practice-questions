@@ -59,13 +59,6 @@ export default async function AdminDashboardPage() {
     }))
     .sort((a, b) => parseInt(a.rating) - parseInt(b.rating));
 
-  // Recent completions
-  const recentCompletions = await db.problem.findMany({
-    where: { completed: true },
-    orderBy: { completedAt: "desc" },
-    take: 5,
-  });
-
   return (
     <div className="space-y-8">
       {/* Top Header */}
@@ -129,34 +122,6 @@ export default async function AdminDashboardPage() {
 
       {/* Visual Charts */}
       <AdminCharts completionByTopic={completionByTopic} problemsByRating={problemsByRating} />
-
-      {/* Recent Completions */}
-      <Card className="border-zinc-800 bg-zinc-950/20 backdrop-blur-md">
-        <CardHeader>
-          <CardTitle className="text-base font-bold text-white">Recent Completions</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {recentCompletions.length > 0 ? (
-            <div className="divide-y divide-zinc-900">
-              {recentCompletions.map((p: any) => (
-                <div key={p.id} className="py-3 flex justify-between items-center text-xs">
-                  <div>
-                    <h5 className="font-semibold text-zinc-200">{p.problem}</h5>
-                    <span className="text-zinc-500">Rating: {p.rating} | {p.mainTopic}</span>
-                  </div>
-                  <span className="text-zinc-500 font-medium">
-                    {p.completedAt ? new Date(p.completedAt).toLocaleDateString() : ""}
-                  </span>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-8 text-zinc-500 text-xs">
-              No problems completed yet. Check off a problem on the homepage to start recording history!
-            </div>
-          )}
-        </CardContent>
-      </Card>
     </div>
   );
 }

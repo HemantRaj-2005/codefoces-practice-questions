@@ -42,7 +42,6 @@ interface Problem {
   hiddenPattern: string | null;
   link: string;
   completed: boolean;
-  completedAt: Date | null;
   notes: string | null;
   createdAt: Date;
   updatedAt: Date;
@@ -175,7 +174,6 @@ export default function HomePageClient({
               ? {
                   ...prob,
                   completed: newCompleted,
-                  completedAt: newCompleted ? new Date() : null,
                 }
               : prob
           ),
@@ -202,7 +200,6 @@ export default function HomePageClient({
                 ? {
                     ...prob,
                     completed: currentCompleted,
-                    completedAt: currentCompleted ? new Date() : null,
                   }
                 : prob
             ),
