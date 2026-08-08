@@ -78,49 +78,49 @@ export default async function AdminDashboardPage() {
 
       {/* Stats Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Card className="border-zinc-800 bg-zinc-950/20">
+        <Card className="glass-blue">
           <CardContent className="p-6 flex items-center justify-between">
             <div className="space-y-1">
-              <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest block">Total Problems</span>
-              <span className="text-3xl font-extrabold text-white">{total}</span>
+              <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block">Total Problems</span>
+              <span className="text-3xl font-extrabold text-[#716bff]">{total}</span>
             </div>
-            <div className="h-12 w-12 rounded-xl bg-zinc-900 border border-zinc-850 flex items-center justify-center text-blue-400">
+            <div className="h-12 w-12 rounded-xl bg-[#4c6fff]/10 border border-[#4c6fff]/20 flex items-center justify-center text-[#4c6fff]">
               <CheckSquare className="h-5 w-5" />
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-zinc-800 bg-zinc-950/20">
+        <Card className="glass-yellow">
           <CardContent className="p-6 flex items-center justify-between">
             <div className="space-y-1">
-              <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest block">Completed</span>
-              <span className="text-3xl font-extrabold text-emerald-400">{completed}</span>
+              <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block">Completed</span>
+              <span className="text-3xl font-extrabold text-[#ffbe3c]">{completed}</span>
             </div>
-            <div className="h-12 w-12 rounded-xl bg-zinc-900 border border-zinc-850 flex items-center justify-center text-emerald-400">
+            <div className="h-12 w-12 rounded-xl bg-[#ffbe3c]/10 border border-[#ffbe3c]/20 flex items-center justify-center text-[#ffbe3c]">
               <TrendingUp className="h-5 w-5" />
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-zinc-800 bg-zinc-950/20">
+        <Card className="glass-orange">
           <CardContent className="p-6 flex items-center justify-between">
             <div className="space-y-1">
-              <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest block">Completion %</span>
-              <span className="text-3xl font-extrabold text-indigo-400">{percentage}%</span>
+              <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block">Completion %</span>
+              <span className="text-3xl font-extrabold text-[#ff542f]">{percentage}%</span>
             </div>
-            <div className="h-12 w-12 rounded-xl bg-zinc-900 border border-zinc-850 flex items-center justify-center text-indigo-400">
+            <div className="h-12 w-12 rounded-xl bg-[#ff542f]/10 border border-[#ff542f]/20 flex items-center justify-center text-[#ff542f]">
               <Activity className="h-5 w-5" />
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-zinc-800 bg-zinc-950/20">
+        <Card className="glass-red">
           <CardContent className="p-6 flex items-center justify-between">
             <div className="space-y-1">
-              <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest block">Remaining</span>
-              <span className="text-3xl font-extrabold text-amber-500">{remaining}</span>
+              <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block">Remaining</span>
+              <span className="text-3xl font-extrabold text-[#ff4646]">{remaining}</span>
             </div>
-            <div className="h-12 w-12 rounded-xl bg-zinc-900 border border-zinc-850 flex items-center justify-center text-amber-500">
+            <div className="h-12 w-12 rounded-xl bg-[#ff4646]/10 border border-[#ff4646]/20 flex items-center justify-center text-[#ff4646]">
               <ListPlus className="h-5 w-5" />
             </div>
           </CardContent>

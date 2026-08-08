@@ -127,3 +127,127 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--scrollbar-thumb-hover);
 }
+
+/* Colorful Glassmorphism System */
+
+.glass-red {
+  background: rgba(255, 70, 70, 0.08);
+  backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgba(255, 100, 100, 0.16);
+  box-shadow: 
+    0 12px 35px rgba(0, 0, 0, 0.35), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 20px rgba(255, 60, 50, 0.12);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-red:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 70, 70, 0.12);
+  border-color: rgba(255, 120, 120, 0.25);
+  box-shadow: 
+    0 20px 45px rgba(0, 0, 0, 0.40), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 0 30px rgba(255, 60, 50, 0.20);
+}
+
+.glass-orange {
+  background: rgba(255, 100, 45, 0.09);
+  backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgba(255, 130, 70, 0.17);
+  box-shadow: 
+    0 12px 35px rgba(0, 0, 0, 0.35), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 20px rgba(255, 90, 40, 0.14);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-orange:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 100, 45, 0.13);
+  border-color: rgba(255, 150, 90, 0.25);
+  box-shadow: 
+    0 20px 45px rgba(0, 0, 0, 0.40), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 0 30px rgba(255, 90, 40, 0.22);
+}
+
+.glass-yellow {
+  background: rgba(255, 190, 60, 0.08);
+  backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgba(255, 210, 100, 0.16);
+  box-shadow: 
+    0 12px 35px rgba(0, 0, 0, 0.35), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 20px rgba(255, 180, 50, 0.12);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-yellow:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 190, 60, 0.12);
+  border-color: rgba(255, 220, 120, 0.25);
+  box-shadow: 
+    0 20px 45px rgba(0, 0, 0, 0.40), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 0 30px rgba(255, 180, 50, 0.20);
+}
+
+.glass-purple {
+  background: rgba(140, 90, 255, 0.08);
+  backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgba(160, 120, 255, 0.15);
+  box-shadow: 
+    0 12px 35px rgba(0, 0, 0, 0.35), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 20px rgba(130, 80, 255, 0.12);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-purple:hover {
+  transform: translateY(-3px);
+  background: rgba(140, 90, 255, 0.12);
+  border-color: rgba(180, 140, 255, 0.23);
+  box-shadow: 
+    0 20px 45px rgba(0, 0, 0, 0.40), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 0 30px rgba(130, 80, 255, 0.20);
+}
+
+.glass-blue {
+  background: rgba(76, 111, 255, 0.08);
+  backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgba(100, 140, 255, 0.15);
+  box-shadow: 
+    0 12px 35px rgba(0, 0, 0, 0.35), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 20px rgba(76, 111, 255, 0.12);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-blue:hover {
+  transform: translateY(-3px);
+  background: rgba(76, 111, 255, 0.12);
+  border-color: rgba(120, 160, 255, 0.22);
+  box-shadow: 
+    0 20px 45px rgba(0, 0, 0, 0.40), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 0 30px rgba(76, 111, 255, 0.20);
+}
+
+/* Subtle Gradient Glass */
+.glass-gradient-amber-orange {
+  background: linear-gradient(135deg, rgba(255, 190, 60, 0.07), rgba(255, 100, 45, 0.08));
+  backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgba(255, 170, 80, 0.16);
+  box-shadow: 
+    0 12px 35px rgba(0, 0, 0, 0.35), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 20px rgba(255, 130, 50, 0.12);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-gradient-amber-orange:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, rgba(255, 190, 60, 0.11), rgba(255, 100, 45, 0.12));
+  border-color: rgba(255, 190, 100, 0.23);
+  box-shadow: 
+    0 20px 45px rgba(0, 0, 0, 0.40), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 0 30px rgba(255, 130, 50, 0.20);
+}
+

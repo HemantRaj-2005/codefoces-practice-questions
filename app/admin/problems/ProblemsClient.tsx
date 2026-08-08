@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { cn } from "@/lib/utils";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useToast } from "@/components/ui/toast";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -135,6 +136,7 @@ export default function ProblemsClient({
       params.delete("page");
     }
     router.push(`${pathname}?${params.toString()}`);
+    router.refresh();
   };
 
   const handleSearchSubmit = (e: React.FormEvent) => {
@@ -449,21 +451,29 @@ export default function ProblemsClient({
               </TableHeader>
               <TableBody>
                 {problems.map((p) => (
-                  <TableRow key={p.id} className={p.completed ? "bg-emerald-950/5 border-emerald-900/10" : ""}>
+                  <TableRow
+                    key={p.id}
+                    className={cn(
+                      "transition-colors duration-200",
+                      p.completed
+                        ? "bg-[#ffbe3c]/4 hover:bg-[#ffbe3c]/8 border-b border-[#ffbe3c]/12 text-[#ffbe3c]/90"
+                        : "bg-[#ff542f]/2 hover:bg-[#ff542f]/5 border-b border-[#ff542f]/8 text-[#ff542f]/90"
+                    )}
+                  >
                     <TableCell className="text-center">
                       <input
                         type="checkbox"
                         checked={selectedIds.includes(p.id)}
                         onChange={() => toggleSelectProblem(p.id)}
-                        className="rounded border-zinc-700 bg-zinc-900 text-indigo-655 focus:ring-indigo-600 h-4 w-4"
+                        className="rounded border-zinc-700 bg-zinc-900 text-indigo-650 focus:ring-indigo-600 h-4 w-4"
                       />
                     </TableCell>
-                    <TableCell className="font-semibold text-zinc-100 max-w-xs truncate">
+                    <TableCell className="font-semibold text-inherit max-w-xs truncate">
                       <a
                         href={p.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:underline flex items-center gap-1.5 hover:text-white"
+                        className="hover:underline flex items-center gap-1.5 text-inherit hover:text-white"
                       >
                         {p.problem}
                       </a>

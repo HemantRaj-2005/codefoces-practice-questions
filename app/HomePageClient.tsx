@@ -11,6 +11,7 @@ import { Progress } from "@/components/ui/progress";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table";
 import { toggleProblemCompletion, updateProblemNotes } from "@/actions/problems";
 import { ExternalLink, Search, SlidersHorizontal, BookOpen, CheckCircle2, Circle, AlertCircle, RefreshCw, LayoutGrid, List } from "lucide-react";
 
@@ -315,57 +316,57 @@ export default function HomePageClient({
     >
       {/* Homepage Stat Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-6 gap-4">
-        <Card className="col-span-1">
+        <Card className="col-span-1 glass-blue">
           <CardHeader className="p-4 pb-0">
-            <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Total Problems</span>
+            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Total Problems</span>
           </CardHeader>
           <CardContent className="p-4 pt-1">
-            <span className="text-2xl font-bold text-white">{currentStats.total}</span>
+            <span className="text-2xl font-bold text-[#716bff]">{currentStats.total}</span>
           </CardContent>
         </Card>
 
-        <Card className="col-span-1 shadow-[0_8px_30px_rgba(16,185,129,0.06)] border-emerald-500/10">
+        <Card className="col-span-1 glass-yellow">
           <CardHeader className="p-4 pb-0">
-            <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest font-sans">Completed</span>
+            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest font-sans">Completed</span>
           </CardHeader>
           <CardContent className="p-4 pt-1 flex items-baseline gap-2">
-            <span className="text-2xl font-bold text-emerald-400">{currentStats.completed}</span>
+            <span className="text-2xl font-bold text-[#ffbe3c]">{currentStats.completed}</span>
           </CardContent>
         </Card>
 
-        <Card className="col-span-1">
+        <Card className="col-span-1 glass-red">
           <CardHeader className="p-4 pb-0">
-            <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Remaining</span>
+            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Remaining</span>
           </CardHeader>
           <CardContent className="p-4 pt-1">
-            <span className="text-2xl font-bold text-amber-500">{currentStats.remaining}</span>
+            <span className="text-2xl font-bold text-[#ff4646]">{currentStats.remaining}</span>
           </CardContent>
         </Card>
 
-        <Card className="col-span-1">
+        <Card className="col-span-1 glass-purple">
           <CardHeader className="p-4 pb-0">
-            <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Topics</span>
+            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Topics</span>
           </CardHeader>
           <CardContent className="p-4 pt-1">
-            <span className="text-2xl font-bold text-indigo-400">{currentStats.topicsCount}</span>
+            <span className="text-2xl font-bold text-[#8c5aff]">{currentStats.topicsCount}</span>
           </CardContent>
         </Card>
 
-        <Card className="col-span-1">
+        <Card className="col-span-1 glass-blue">
           <CardHeader className="p-4 pb-0">
-            <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Subtopics</span>
+            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Subtopics</span>
           </CardHeader>
           <CardContent className="p-4 pt-1">
-            <span className="text-2xl font-bold text-purple-400">{currentStats.subtopicsCount}</span>
+            <span className="text-2xl font-bold text-[#4c6fff]">{currentStats.subtopicsCount}</span>
           </CardContent>
         </Card>
 
-        <Card className="col-span-1 shadow-[0_8px_30px_rgba(59,130,246,0.06)] border-blue-500/10">
+        <Card className="col-span-1 glass-orange">
           <CardHeader className="p-4 pb-0">
-            <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Completion %</span>
+            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Completion %</span>
           </CardHeader>
           <CardContent className="p-4 pt-1">
-            <span className="text-2xl font-bold text-blue-400">{currentStats.percentage}%</span>
+            <span className="text-2xl font-bold text-[#ff542f]">{currentStats.percentage}%</span>
           </CardContent>
         </Card>
       </div>
@@ -644,97 +645,99 @@ export default function HomePageClient({
                                     ))}
                                   </div>
                                 ) : (
-                                  <div className="overflow-x-auto rounded-lg border border-zinc-800 bg-zinc-950/20">
-                                    <table className="w-full border-collapse text-left text-sm text-zinc-300">
-                                      <thead>
-                                        <tr className="border-b border-zinc-800 bg-zinc-900/30 text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
-                                          <th className="p-3 w-12 text-center">Solved</th>
-                                          <th className="p-3">Problem</th>
-                                          <th className="p-3 w-24">Rating</th>
-                                          <th className="p-3 w-32">Main Topic</th>
-                                          <th className="p-3 w-44">Hidden Pattern</th>
-                                          <th className="p-3 w-32">Codeforces</th>
-                                          <th className="p-3 max-w-sm">Notes</th>
-                                        </tr>
-                                      </thead>
-                                      <tbody className="divide-y divide-zinc-900 bg-zinc-950/10">
+                                  <div className="overflow-x-auto">
+                                    <Table>
+                                      <TableHeader>
+                                        <TableRow>
+                                          <TableHead className="w-12 text-center">Solved</TableHead>
+                                          <TableHead>Problem</TableHead>
+                                          <TableHead className="w-24">Rating</TableHead>
+                                          <TableHead className="w-32">Main Topic</TableHead>
+                                          <TableHead className="w-44">Hidden Pattern</TableHead>
+                                          <TableHead className="w-32">Codeforces</TableHead>
+                                          <TableHead className="max-w-sm">Notes</TableHead>
+                                        </TableRow>
+                                      </TableHeader>
+                                      <TableBody>
                                         {sub.problems.map((problem) => (
-                                          <tr
+                                          <TableRow
                                             key={problem.id}
                                             className={cn(
-                                              "transition-colors hover:bg-zinc-900/10",
-                                              problem.completed && "bg-emerald-955/5 text-zinc-500"
+                                              "transition-colors duration-200",
+                                              problem.completed
+                                                ? "bg-[#ffbe3c]/4 hover:bg-[#ffbe3c]/8 border-b border-[#ffbe3c]/12 text-[#ffbe3c]/90"
+                                                : "bg-[#ff542f]/2 hover:bg-[#ff542f]/5 border-b border-[#ff542f]/8 text-[#ff542f]/90"
                                             )}
                                           >
                                             {/* Completed Checkbox */}
-                                            <td className="p-3 text-center align-middle">
+                                            <TableCell className="text-center align-middle">
                                               <button
                                                 type="button"
                                                 onClick={() => handleToggleCompletion(problem.id, problem.completed)}
-                                                className="text-zinc-500 hover:text-white transition-colors focus:outline-none"
+                                                className="text-inherit hover:text-white transition-colors focus:outline-none cursor-pointer"
                                               >
                                                 {problem.completed ? (
-                                                  <CheckCircle2 className="h-5 w-5 text-emerald-500" />
+                                                  <CheckCircle2 className="h-5 w-5 text-[#ffbe3c]" />
                                                 ) : (
                                                   <Circle className="h-5 w-5 text-zinc-600" />
                                                 )}
                                               </button>
-                                            </td>
+                                            </TableCell>
 
                                             {/* Problem Name */}
-                                            <td className="p-3 font-semibold text-zinc-200 align-middle">
-                                              <span className={cn(problem.completed && "line-through text-zinc-500")}>
+                                            <TableCell className="font-semibold text-inherit align-middle">
+                                              <span className={cn(problem.completed && "line-through opacity-70")}>
                                                 {problem.problem}
                                               </span>
-                                            </td>
+                                            </TableCell>
 
                                             {/* Rating Badge */}
-                                            <td className="p-3 align-middle">
+                                            <TableCell className="align-middle">
                                               <Badge variant="rating">{problem.rating}</Badge>
-                                            </td>
+                                            </TableCell>
 
                                             {/* Main Topic Badge */}
-                                            <td className="p-3 align-middle">
+                                            <TableCell className="align-middle">
                                               <Badge variant="topic">{problem.mainTopic}</Badge>
-                                            </td>
+                                            </TableCell>
 
                                             {/* Hidden Pattern Badge */}
-                                            <td className="p-3 align-middle text-xs">
+                                            <TableCell className="align-middle text-xs">
                                               {problem.hiddenPattern ? (
                                                 <Badge variant="pattern">{problem.hiddenPattern}</Badge>
                                               ) : (
-                                                <span className="text-zinc-600">-</span>
+                                                <span className="text-zinc-500">-</span>
                                               )}
-                                            </td>
+                                            </TableCell>
 
                                             {/* Codeforces Link */}
-                                            <td className="p-3 align-middle">
+                                            <TableCell className="align-middle">
                                               <a
                                                 href={problem.link}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-zinc-900 border border-zinc-800 text-xs font-semibold text-zinc-300 hover:bg-zinc-800 hover:text-white transition-all duration-200"
+                                                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-white/8 bg-white/4 text-xs font-bold text-zinc-300 hover:bg-white/8 hover:text-white transition-all duration-200"
                                                 title="Open on Codeforces"
                                               >
                                                 <CodeforcesIcon />
                                                 <span className="font-mono text-[10px] tracking-wider">{extractProblemId(problem.link)}</span>
                                               </a>
-                                            </td>
+                                            </TableCell>
 
                                             {/* Notes Inline Input Field */}
-                                            <td className="p-3 align-middle max-w-sm">
+                                            <TableCell className="align-middle max-w-sm">
                                               <input
                                                 type="text"
                                                 placeholder="Type notes here... autosaves"
                                                 value={notesState[problem.id] ?? ""}
                                                 onChange={(e) => handleNoteChange(problem.id, e.target.value)}
-                                                className="w-full bg-transparent border-0 hover:bg-zinc-900/40 focus:bg-zinc-900/60 px-2 py-1 text-xs text-zinc-300 placeholder:text-zinc-600 focus:outline-none transition-all rounded"
+                                                className="w-full bg-transparent border-0 hover:bg-white/5 focus:bg-white/10 px-2 py-1 text-xs text-inherit placeholder:text-zinc-500 focus:outline-none transition-all rounded"
                                               />
-                                            </td>
-                                          </tr>
+                                            </TableCell>
+                                          </TableRow>
                                         ))}
-                                      </tbody>
-                                    </table>
+                                      </TableBody>
+                                    </Table>
                                   </div>
                                 )
                               ) : (

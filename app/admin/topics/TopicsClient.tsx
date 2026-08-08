@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { cn } from "@/lib/utils";
 import { useToast } from "@/components/ui/toast";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -14,7 +15,7 @@ import {
   updateSubTopic,
   deleteSubTopic,
 } from "@/actions/topics";
-import { Edit2, Trash2, Plus, ArrowUpDown, BookOpen, Layers } from "lucide-react";
+import { Edit2, Trash2, Plus, ArrowUpDown, BookOpen, Layers, ChevronDown } from "lucide-react";
 
 interface SubTopic {
   id: string;
@@ -37,6 +38,14 @@ interface TopicsClientProps {
 export default function TopicsClient({ initialTopics }: TopicsClientProps) {
   const { toast } = useToast();
   const [topics, setTopics] = React.useState<Topic[]>(initialTopics);
+  const [collapsedTopics, setCollapsedTopics] = React.useState<Record<string, boolean>>({});
+
+  const toggleTopicCollapse = (topicId: string) => {
+    setCollapsedTopics((prev) => ({
+      ...prev,
+      [topicId]: prev[topicId] === undefined ? false : !prev[topicId],
+    }));
+  };
 
   // Modals state
   const [topicModalOpen, setTopicModalOpen] = React.useState(false);
@@ -246,94 +255,113 @@ export default function TopicsClient({ initialTopics }: TopicsClientProps) {
 
       {topics.length > 0 ? (
         <div className="grid grid-cols-1 gap-6">
-          {topics.map((topic) => (
-            <Card key={topic.id}>
-              <CardHeader className="border-b border-white/5 p-5 flex flex-row items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 border border-white/8">
-                    <BookOpen className="h-4 w-4 text-indigo-400" />
-                  </div>
-                  <div>
-                    <CardTitle className="text-base font-bold text-white">{topic.name}</CardTitle>
-                    <span className="text-[10px] text-zinc-500 font-semibold mt-1 block">Order: {topic.order}</span>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => openCreateSubTopic(topic)}
-                    className="flex items-center gap-1 text-zinc-300"
-                  >
-                    <Plus className="h-3.5 w-3.5" />
-                    Add Subtopic
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => openEditTopic(topic)}
-                    className="text-zinc-400 hover:text-white"
-                  >
-                    <Edit2 className="h-3.5 w-3.5" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => confirmDeleteTopic(topic)}
-                    className="text-red-400 hover:text-red-300"
-                  >
-                    <Trash2 className="h-3.5 w-3.5" />
-                  </Button>
-                </div>
-              </CardHeader>
-              <CardContent className="p-5">
-                {topic.subTopics.length > 0 ? (
-                  <div className="space-y-3">
-                    <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest flex items-center gap-2 mb-1">
-                      <Layers className="h-3 w-3" />
-                      Subtopics
+          {topics.map((topic) => {
+            const isCollapsed = collapsedTopics[topic.id] !== false;
+            return (
+              <Card key={topic.id}>
+                <CardHeader 
+                  className="border-b border-white/5 p-5 flex flex-row items-center justify-between cursor-pointer hover:bg-white/1 transition-all select-none"
+                  onClick={() => toggleTopicCollapse(topic.id)}
+                >
+                  <div className="flex items-center gap-3">
+                    <ChevronDown
+                      className={cn(
+                        "h-4 w-4 text-zinc-400 transition-transform duration-200 shrink-0",
+                        isCollapsed && "-rotate-90 text-zinc-500"
+                      )}
+                    />
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 border border-white/8">
+                      <BookOpen className="h-4 w-4 text-indigo-400" />
                     </div>
-                    {topic.subTopics.map((sub) => (
-                      <div
-                        key={sub.id}
-                        className="flex items-center justify-between p-3.5 rounded-xl border border-white/5 bg-white/2"
-                      >
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm text-zinc-200 font-medium">{sub.name}</span>
-                          <span className="text-[9px] bg-white/5 border border-white/8 text-zinc-400 px-1.5 py-0.5 rounded font-mono">
-                            Order {sub.order}
-                          </span>
+                    <div>
+                      <CardTitle className="text-base font-bold text-white">{topic.name}</CardTitle>
+                      <span className="text-[10px] text-zinc-500 font-semibold mt-1 block">Order: {topic.order}</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => openCreateSubTopic(topic)}
+                      className="flex items-center gap-1 text-zinc-300"
+                    >
+                      <Plus className="h-3.5 w-3.5" />
+                      Add Subtopic
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      onClick={() => openEditTopic(topic)}
+                      className="text-zinc-400 hover:text-white"
+                    >
+                      <Edit2 className="h-3.5 w-3.5" />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      onClick={() => confirmDeleteTopic(topic)}
+                      className="text-red-400 hover:text-red-300"
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                    </Button>
+                  </div>
+                </CardHeader>
+                <div
+                  className={cn(
+                    "transition-all duration-300 ease-in-out overflow-hidden",
+                    isCollapsed ? "max-h-0 opacity-0 pointer-events-none" : "max-h-[5000px] opacity-100"
+                  )}
+                >
+                  <CardContent className="p-5">
+                    {topic.subTopics.length > 0 ? (
+                      <div className="space-y-3">
+                        <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest flex items-center gap-2 mb-1">
+                          <Layers className="h-3 w-3" />
+                          Subtopics
                         </div>
-                        <div className="flex items-center gap-2">
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => openEditSubTopic(topic, sub)}
-                            className="h-8 w-8 text-zinc-400 hover:text-white hover:bg-white/5"
+                        {topic.subTopics.map((sub) => (
+                          <div
+                            key={sub.id}
+                            className="flex items-center justify-between p-3.5 rounded-xl border border-white/5 bg-white/2"
                           >
-                            <Edit2 className="h-3.5 w-3.5" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => confirmDeleteSubTopic(topic, sub)}
-                            className="h-8 w-8 text-red-400 hover:text-red-300 hover:bg-white/5"
-                          >
-                            <Trash2 className="h-3.5 w-3.5" />
-                          </Button>
-                        </div>
+                            <div className="flex items-center gap-2">
+                              <span className="text-sm text-zinc-200 font-medium">{sub.name}</span>
+                              <span className="text-[9px] bg-white/5 border border-white/8 text-zinc-400 px-1.5 py-0.5 rounded font-mono">
+                                Order {sub.order}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={() => openEditSubTopic(topic, sub)}
+                                className="h-8 w-8 text-zinc-400 hover:text-white hover:bg-white/5"
+                              >
+                                <Edit2 className="h-3.5 w-3.5" />
+                              </Button>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={() => confirmDeleteSubTopic(topic, sub)}
+                                className="h-8 w-8 text-red-400 hover:text-red-300 hover:bg-white/5"
+                              >
+                                <Trash2 className="h-3.5 w-3.5" />
+                              </Button>
+                            </div>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="text-center py-6 border border-dashed border-white/8 rounded-xl bg-white/1 text-zinc-500 text-xs">
-                    No subtopics added yet. Click &quot;Add Subtopic&quot; to populate.
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          ))}
+                    ) : (
+                      <div className="text-center py-6 border border-dashed border-white/8 rounded-xl bg-white/1 text-zinc-500 text-xs">
+                        No subtopics added yet. Click &quot;Add Subtopic&quot; to populate.
+                      </div>
+                    )}
+                  </CardContent>
+                </div>
+              </Card>
+            );
+          })}
         </div>
       ) : (
         <Card className="border-zinc-800 bg-zinc-950/20 border-dashed py-16 text-center">
