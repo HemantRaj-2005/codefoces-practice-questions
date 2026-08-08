@@ -358,7 +358,7 @@ export default function ProblemsClient({
       </div>
 
       {/* Toolbar Search / Topic Filters */}
-      <Card className="border-zinc-800 bg-zinc-950/20 p-4">
+      <Card className="glass-1 p-4 rounded-2xl">
         <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
           {/* Search form */}
           <form onSubmit={handleSearchSubmit} className="flex gap-2 w-full lg:max-w-md">
@@ -383,7 +383,7 @@ export default function ProblemsClient({
             <select
               value={filters.topicId}
               onChange={(e) => updateQuery({ topic: e.target.value, subtopic: "" })}
-              className="h-10 rounded-lg border border-zinc-850 bg-zinc-950/40 px-3 text-xs text-zinc-300 placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-400"
+              className="h-10 rounded-lg border border-white/8 bg-black/25 px-3 text-xs text-zinc-350 focus-visible:outline-none focus:border-[#ff542f] focus:ring-1 focus:ring-[#ff542f]/20 transition-all duration-200"
             >
               <option value="">Filter by Topic (All)</option>
               {topics.map((t) => (
@@ -397,7 +397,7 @@ export default function ProblemsClient({
             <select
               value={filters.subtopicId}
               onChange={(e) => updateQuery({ subtopic: e.target.value })}
-              className="h-10 rounded-lg border border-zinc-850 bg-zinc-950/40 px-3 text-xs text-zinc-300 placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-400"
+              className="h-10 rounded-lg border border-white/8 bg-black/25 px-3 text-xs text-zinc-355 focus-visible:outline-none focus:border-[#ff542f] focus:ring-1 focus:ring-[#ff542f]/20 transition-all duration-200"
               disabled={!filters.topicId}
             >
               <option value="">Filter by Subtopic (All)</option>
@@ -425,7 +425,7 @@ export default function ProblemsClient({
       </Card>
 
       {/* Main Problems Table */}
-      <Card className="border-zinc-800 bg-zinc-950/15 overflow-hidden">
+      <Card className="overflow-hidden">
         {problems.length > 0 ? (
           <div className="overflow-x-auto">
             <Table>

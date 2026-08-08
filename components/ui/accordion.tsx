@@ -64,7 +64,7 @@ export function Accordion({
 
   return (
     <AccordionContext.Provider value={{ openItems, toggleItem }}>
-      <div className={cn("space-y-2", className)}>{children}</div>
+      <div className={cn("space-y-3", className)}>{children}</div>
     </AccordionContext.Provider>
   );
 }
@@ -74,7 +74,7 @@ export function AccordionItem({ value, className, children }: AccordionItemProps
   const isOpen = openItems.includes(value);
 
   return (
-    <div className={cn("border border-zinc-800/60 bg-zinc-950/20 rounded-lg overflow-hidden transition-all duration-300", className)}>
+    <div className={cn("border border-white/5 bg-white/2 rounded-xl overflow-hidden transition-all duration-300", className)}>
       {React.Children.map(children, (child) => {
         if (React.isValidElement(child)) {
           return React.cloneElement(child, {
@@ -100,7 +100,7 @@ export function AccordionTrigger({
       type="button"
       onClick={onClick}
       className={cn(
-        "flex w-full items-center justify-between px-5 py-4 text-left font-medium text-zinc-200 hover:text-white transition-all duration-200 hover:bg-zinc-900/40",
+        "flex w-full items-center justify-between px-5 py-4 text-left font-semibold text-zinc-200 hover:text-white transition-all duration-205 hover:bg-white/3 cursor-pointer",
         className
       )}
     >
@@ -123,8 +123,8 @@ export function AccordionContent({
   return (
     <div
       className={cn(
-        "transition-all duration-300 ease-in-out overflow-hidden border-t border-zinc-800/40",
-        isOpen ? "max-h-[5000px] opacity-100 p-5 bg-zinc-950/40" : "max-h-0 opacity-0 p-0 pointer-events-none"
+        "transition-all duration-300 ease-in-out overflow-hidden border-t border-white/5",
+        isOpen ? "max-h-[5000px] opacity-100 p-5 bg-white/1" : "max-h-0 opacity-0 p-0 pointer-events-none"
       )}
     >
       <div className={className}>{children}</div>

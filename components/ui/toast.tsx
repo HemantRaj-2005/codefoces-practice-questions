@@ -67,10 +67,10 @@ function Toaster() {
         <div
           key={t.id}
           className={cn(
-            "flex w-full items-start gap-3 rounded-lg border p-4 shadow-lg backdrop-blur-md transition-all duration-300 pointer-events-auto animate-in slide-in-from-bottom-5",
-            t.type === "success" && "border-emerald-800 bg-emerald-950/80 text-emerald-200",
-            t.type === "error" && "border-red-900 bg-red-950/80 text-red-200",
-            (t.type === "info" || !t.type) && "border-zinc-800 bg-zinc-900/80 text-zinc-200"
+            "flex w-full items-start gap-3 rounded-xl border p-4 shadow-2xl backdrop-blur-xl transition-all duration-300 pointer-events-auto animate-in slide-in-from-bottom-5",
+            t.type === "success" && "border-emerald-500/20 bg-emerald-950/40 text-emerald-200 shadow-[0_8px_30px_rgba(16,185,129,0.15)]",
+            t.type === "error" && "border-red-500/20 bg-red-950/40 text-red-200 shadow-[0_8px_30px_rgba(239,68,68,0.15)]",
+            (t.type === "info" || !t.type) && "border-blue-500/20 bg-blue-950/40 text-blue-200 shadow-[0_8px_30px_rgba(59,130,246,0.15)]"
           )}
         >
           {t.type === "success" && <CheckCircle className="h-5 w-5 text-emerald-400 shrink-0 mt-0.5" />}

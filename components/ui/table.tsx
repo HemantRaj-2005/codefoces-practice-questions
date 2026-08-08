@@ -5,7 +5,7 @@ const Table = React.forwardRef<
   HTMLTableElement,
   React.HTMLAttributes<HTMLTableElement>
 >(({ className, ...props }, ref) => (
-  <div className="relative w-full overflow-auto rounded-lg border border-zinc-800 bg-zinc-950/20">
+  <div className="relative w-full overflow-auto rounded-xl glass-1">
     <table
       ref={ref}
       className={cn("w-full caption-bottom text-sm text-zinc-300", className)}
@@ -19,7 +19,7 @@ const TableHeader = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
 >(({ className, ...props }, ref) => (
-  <thead ref={ref} className={cn("border-b border-zinc-800 bg-zinc-900/40", className)} {...props} />
+  <thead ref={ref} className={cn("border-b border-white/5 bg-white/2", className)} {...props} />
 ));
 TableHeader.displayName = "TableHeader";
 
@@ -41,7 +41,7 @@ const TableFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <tfoot
     ref={ref}
-    className={cn("border-t border-zinc-800 bg-zinc-900/50 font-medium [&>tr]:last:border-b-0", className)}
+    className={cn("border-t border-white/5 bg-white/2 font-medium [&>tr]:last:border-b-0", className)}
     {...props}
   />
 ));
@@ -54,7 +54,7 @@ const TableRow = React.forwardRef<
   <tr
     ref={ref}
     className={cn(
-      "border-b border-zinc-800/60 transition-colors hover:bg-zinc-900/30 data-[state=selected]:bg-zinc-800",
+      "border-b border-white/5 transition-colors hover:bg-white/2 data-[state=selected]:bg-white/4",
       className
     )}
     {...props}

@@ -247,15 +247,15 @@ export default function TopicsClient({ initialTopics }: TopicsClientProps) {
       {topics.length > 0 ? (
         <div className="grid grid-cols-1 gap-6">
           {topics.map((topic) => (
-            <Card key={topic.id} className="border-zinc-800 bg-zinc-950/20">
-              <CardHeader className="border-b border-zinc-900/60 p-5 flex flex-row items-center justify-between">
+            <Card key={topic.id}>
+              <CardHeader className="border-b border-white/5 p-5 flex flex-row items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-900 border border-zinc-850">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 border border-white/8">
                     <BookOpen className="h-4 w-4 text-indigo-400" />
                   </div>
                   <div>
                     <CardTitle className="text-base font-bold text-white">{topic.name}</CardTitle>
-                    <span className="text-[10px] text-zinc-500 font-medium mt-1 block">Order: {topic.order}</span>
+                    <span className="text-[10px] text-zinc-500 font-semibold mt-1 block">Order: {topic.order}</span>
                   </div>
                 </div>
 
@@ -264,7 +264,7 @@ export default function TopicsClient({ initialTopics }: TopicsClientProps) {
                     variant="outline"
                     size="sm"
                     onClick={() => openCreateSubTopic(topic)}
-                    className="border-zinc-800 hover:bg-zinc-900 flex items-center gap-1 text-zinc-300"
+                    className="flex items-center gap-1 text-zinc-300"
                   >
                     <Plus className="h-3.5 w-3.5" />
                     Add Subtopic
@@ -273,7 +273,7 @@ export default function TopicsClient({ initialTopics }: TopicsClientProps) {
                     variant="outline"
                     size="icon"
                     onClick={() => openEditTopic(topic)}
-                    className="border-zinc-800 hover:bg-zinc-900 text-zinc-400 hover:text-white"
+                    className="text-zinc-400 hover:text-white"
                   >
                     <Edit2 className="h-3.5 w-3.5" />
                   </Button>
@@ -281,7 +281,7 @@ export default function TopicsClient({ initialTopics }: TopicsClientProps) {
                     variant="outline"
                     size="icon"
                     onClick={() => confirmDeleteTopic(topic)}
-                    className="border-zinc-800 hover:bg-zinc-900 text-red-400 hover:text-red-300"
+                    className="text-red-400 hover:text-red-300"
                   >
                     <Trash2 className="h-3.5 w-3.5" />
                   </Button>
@@ -297,11 +297,11 @@ export default function TopicsClient({ initialTopics }: TopicsClientProps) {
                     {topic.subTopics.map((sub) => (
                       <div
                         key={sub.id}
-                        className="flex items-center justify-between p-3.5 rounded-lg border border-zinc-900 bg-zinc-950/40"
+                        className="flex items-center justify-between p-3.5 rounded-xl border border-white/5 bg-white/2"
                       >
                         <div className="flex items-center gap-2">
                           <span className="text-sm text-zinc-200 font-medium">{sub.name}</span>
-                          <span className="text-[9px] bg-zinc-900 border border-zinc-800 text-zinc-400 px-1.5 py-0.5 rounded font-mono">
+                          <span className="text-[9px] bg-white/5 border border-white/8 text-zinc-400 px-1.5 py-0.5 rounded font-mono">
                             Order {sub.order}
                           </span>
                         </div>
@@ -310,7 +310,7 @@ export default function TopicsClient({ initialTopics }: TopicsClientProps) {
                             variant="ghost"
                             size="icon"
                             onClick={() => openEditSubTopic(topic, sub)}
-                            className="h-8 w-8 text-zinc-400 hover:text-white hover:bg-zinc-900/60"
+                            className="h-8 w-8 text-zinc-400 hover:text-white hover:bg-white/5"
                           >
                             <Edit2 className="h-3.5 w-3.5" />
                           </Button>
@@ -318,7 +318,7 @@ export default function TopicsClient({ initialTopics }: TopicsClientProps) {
                             variant="ghost"
                             size="icon"
                             onClick={() => confirmDeleteSubTopic(topic, sub)}
-                            className="h-8 w-8 text-red-400 hover:text-red-300 hover:bg-zinc-900/60"
+                            className="h-8 w-8 text-red-400 hover:text-red-300 hover:bg-white/5"
                           >
                             <Trash2 className="h-3.5 w-3.5" />
                           </Button>
@@ -327,7 +327,7 @@ export default function TopicsClient({ initialTopics }: TopicsClientProps) {
                     ))}
                   </div>
                 ) : (
-                  <div className="text-center py-6 border border-dashed border-zinc-900 rounded-lg bg-zinc-950/10 text-zinc-500 text-xs">
+                  <div className="text-center py-6 border border-dashed border-white/8 rounded-xl bg-white/1 text-zinc-500 text-xs">
                     No subtopics added yet. Click &quot;Add Subtopic&quot; to populate.
                   </div>
                 )}

@@ -36,12 +36,12 @@ export function AdminCharts({ completionByTopic, problemsByRating }: AdminCharts
   // Custom tooltip styling for glassmorphic design
   const customTooltipStyle = {
     contentStyle: {
-      backgroundColor: "rgba(9, 9, 11, 0.9)",
-      borderColor: "rgba(39, 39, 42, 0.8)",
-      borderRadius: "8px",
-      color: "#f4f4f5",
-      backdropFilter: "blur(8px)",
-      boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.5)",
+      backgroundColor: "rgba(12, 13, 27, 0.9)",
+      borderColor: "rgba(255, 255, 255, 0.12)",
+      borderRadius: "12px",
+      color: "#f5f5f7",
+      backdropFilter: "blur(12px) saturate(140%)",
+      boxShadow: "0 10px 30px rgba(0, 0, 0, 0.4)",
     },
     labelStyle: {
       fontWeight: "bold",
@@ -52,7 +52,7 @@ export function AdminCharts({ completionByTopic, problemsByRating }: AdminCharts
   return (
     <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
       {/* Chart 1: Completion by Topic */}
-      <Card className="border-zinc-800 bg-zinc-950/20 backdrop-blur-md">
+      <Card>
         <CardHeader>
           <CardTitle className="text-base font-bold text-white">Completion by Topic</CardTitle>
           <CardDescription>Comparison of total and completed problems per topic</CardDescription>
@@ -64,13 +64,13 @@ export function AdminCharts({ completionByTopic, problemsByRating }: AdminCharts
                 data={completionByTopic}
                 margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
               >
-                <CartesianGrid strokeDasharray="3 3" stroke="#27272a" vertical={false} />
-                <XAxis dataKey="name" stroke="#71717a" fontSize={11} tickLine={false} />
-                <YAxis stroke="#71717a" fontSize={11} tickLine={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255, 255, 255, 0.05)" vertical={false} />
+                <XAxis dataKey="name" stroke="#707384" fontSize={11} tickLine={false} />
+                <YAxis stroke="#707384" fontSize={11} tickLine={false} />
                 <Tooltip
                   contentStyle={customTooltipStyle.contentStyle}
                   labelStyle={customTooltipStyle.labelStyle}
-                  cursor={{ fill: "rgba(255, 255, 255, 0.05)" }}
+                  cursor={{ fill: "rgba(255, 255, 255, 0.03)" }}
                 />
                 <Legend wrapperStyle={{ fontSize: "11px", paddingTop: "10px" }} />
                 <Bar
@@ -83,7 +83,7 @@ export function AdminCharts({ completionByTopic, problemsByRating }: AdminCharts
                 <Bar
                   name="Total Problems"
                   dataKey="total"
-                  fill="#4f46e5"
+                  fill="#625cff"
                   radius={[4, 4, 0, 0]}
                   maxBarSize={45}
                 />
@@ -98,7 +98,7 @@ export function AdminCharts({ completionByTopic, problemsByRating }: AdminCharts
       </Card>
 
       {/* Chart 2: Problems by Rating */}
-      <Card className="border-zinc-800 bg-zinc-950/20 backdrop-blur-md">
+      <Card>
         <CardHeader>
           <CardTitle className="text-base font-bold text-white">Problems by Rating</CardTitle>
           <CardDescription>Distribution of problems based on Codeforces rating</CardDescription>
@@ -112,13 +112,13 @@ export function AdminCharts({ completionByTopic, problemsByRating }: AdminCharts
               >
                 <defs>
                   <linearGradient id="colorCount" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.4} />
-                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
+                    <stop offset="5%" stopColor="#ff542f" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#ff542f" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#27272a" vertical={false} />
-                <XAxis dataKey="rating" stroke="#71717a" fontSize={11} tickLine={false} />
-                <YAxis stroke="#71717a" fontSize={11} tickLine={false} allowDecimals={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255, 255, 255, 0.05)" vertical={false} />
+                <XAxis dataKey="rating" stroke="#707384" fontSize={11} tickLine={false} />
+                <YAxis stroke="#707384" fontSize={11} tickLine={false} allowDecimals={false} />
                 <Tooltip
                   contentStyle={customTooltipStyle.contentStyle}
                   labelStyle={customTooltipStyle.labelStyle}
@@ -127,8 +127,8 @@ export function AdminCharts({ completionByTopic, problemsByRating }: AdminCharts
                   name="Count"
                   type="monotone"
                   dataKey="count"
-                  stroke="#3b82f6"
-                  strokeWidth={2}
+                  stroke="#ff542f"
+                  strokeWidth={2.5}
                   fillOpacity={1}
                   fill="url(#colorCount)"
                 />

@@ -100,7 +100,7 @@ export function DialogContent({
       {/* Content Panel */}
       <div
         className={cn(
-          "relative z-50 w-full max-w-lg rounded-xl border border-zinc-800 bg-zinc-950/80 backdrop-blur-lg p-6 shadow-2xl transition-all duration-300 animate-in fade-in zoom-in-95",
+          "relative z-50 w-full max-w-lg rounded-2xl glass-3 p-6 shadow-2xl transition-all duration-300 animate-in fade-in zoom-in-95",
           className
         )}
       >

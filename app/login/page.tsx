@@ -12,19 +12,19 @@ export default function LoginPage() {
   const [state, formAction, isPending] = useActionState(login, null);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#030303] text-zinc-100 p-4 relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-[#0c0d1b] text-zinc-100 p-4 relative overflow-hidden">
       {/* Background radial glows */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-indigo-500/10 blur-[120px] pointer-events-none" />
-      <div className="absolute top-1/3 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full bg-blue-500/5 blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#625cff]/8 blur-[130px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] rounded-full bg-[#ff542f]/5 blur-[100px] pointer-events-none" />
 
-      <Card className="w-full max-w-md border-zinc-800 bg-zinc-950/60 backdrop-blur-xl relative z-10 shadow-2xl">
+      <Card className="w-full max-w-md glass-3 rounded-2xl relative z-10 shadow-[0_25px_70px_rgba(0,0,0,0.4)]">
         <CardHeader className="space-y-3 flex flex-col items-center text-center">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-tr from-blue-500 to-indigo-600 shadow-lg shadow-indigo-500/20">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-tr from-[#625cff] to-[#ff542f] shadow-lg shadow-[#625cff]/20">
             <Activity className="h-6 w-6 text-white" />
           </div>
           <div>
-            <CardTitle className="text-2xl font-bold tracking-tight text-white">Admin Access</CardTitle>
-            <CardDescription className="text-zinc-400 mt-1">
+            <CardTitle className="text-xl font-bold tracking-tight text-white">Admin Access</CardTitle>
+            <CardDescription className="text-xs text-zinc-400 mt-1">
               Enter your credentials to manage the Codeforces Practice Tracker.
             </CardDescription>
           </div>
@@ -33,7 +33,7 @@ export default function LoginPage() {
         <form action={formAction}>
           <CardContent className="space-y-4">
             {state?.error && (
-              <div className="rounded-lg border border-red-900/50 bg-red-950/40 p-3 text-xs font-medium text-red-400 animate-in fade-in-50">
+              <div className="rounded-lg border border-red-500/25 bg-red-500/10 p-3 text-xs font-semibold text-red-300 animate-in fade-in-50">
                 {state.error}
               </div>
             )}
@@ -43,7 +43,7 @@ export default function LoginPage() {
                 Email Address
               </label>
               <div className="relative">
-                <span className="absolute left-3 top-3.5 text-zinc-500">
+                <span className="absolute left-3 top-3 text-zinc-500">
                   <Mail className="h-4 w-4" />
                 </span>
                 <Input
@@ -62,7 +62,7 @@ export default function LoginPage() {
                 Password
               </label>
               <div className="relative">
-                <span className="absolute left-3 top-3.5 text-zinc-500">
+                <span className="absolute left-3 top-3 text-zinc-500">
                   <Lock className="h-4 w-4" />
                 </span>
                 <Input
@@ -81,13 +81,13 @@ export default function LoginPage() {
             <Button
               type="submit"
               disabled={isPending}
-              className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-medium shadow-md shadow-indigo-500/10 active:scale-[0.99] transition-all"
+              className="w-full glass-btn-primary"
             >
               {isPending ? "Authenticating..." : "Sign In"}
             </Button>
             <a
               href="/"
-              className="text-xs text-zinc-500 hover:text-zinc-300 underline-offset-4 hover:underline mt-2 transition-all duration-200"
+              className="text-xs text-zinc-500 hover:text-zinc-350 underline-offset-4 hover:underline mt-2 transition-all duration-200"
             >
               ← Return to Homepage
             </a>

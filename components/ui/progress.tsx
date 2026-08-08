@@ -10,6 +10,14 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
   ({ className, value, indicatorClassName, ...props }, ref) => {
     const boundedValue = Math.min(100, Math.max(0, value || 0));
 
+    // Dynamic gradient based on percentage solved
+    let gradientClass = "from-red-500 to-red-500"; // Low progress (<= 40%): completely red
+    if (boundedValue > 40 && boundedValue <= 80) {
+      gradientClass = "from-red-500 via-red-400 to-yellow-400"; // Medium progress (40% - 80%): red & yellow
+    } else if (boundedValue > 80) {
+      gradientClass = "from-red-500 via-yellow-400 to-emerald-500"; // High progress (> 80%): red, yellow & green
+    }
+
     return (
       <div
         ref={ref}
@@ -21,7 +29,8 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
       >
         <div
           className={cn(
-            "h-full w-full flex-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 transition-all duration-500 ease-out",
+            "h-full w-full flex-1 bg-gradient-to-r transition-all duration-500 ease-out",
+            gradientClass,
             indicatorClassName
           )}
           style={{ transform: `translateX(-${100 - boundedValue}%)` }}
