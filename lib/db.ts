@@ -8,7 +8,12 @@ if (typeof window === "undefined") {
   neonConfig.webSocketConstructor = ws;
 }
 
-const connectionString = process.env.DATABASE_URL || "";
+let connectionString = process.env.DATABASE_URL || "";
+if (connectionString.startsWith("ppostgresql://")) {
+  connectionString = connectionString.replace("ppostgresql://", "postgresql://");
+  process.env.DATABASE_URL = connectionString;
+}
+
 const adapter = new PrismaNeon({ connectionString });
 
 export const db = new PrismaClient({

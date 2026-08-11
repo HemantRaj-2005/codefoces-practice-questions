@@ -19,6 +19,7 @@ import {
   Cell,
   PieChart,
   Pie,
+  ReferenceArea,
 } from "recharts";
 import {
   Activity,
@@ -37,6 +38,35 @@ import {
   Clock,
 } from "lucide-react";
 
+const CustomTooltip = ({ active, payload }: any) => {
+  if (active && payload && payload.length) {
+    const data = payload[0].payload;
+    const isPositive = data.change >= 0;
+    return (
+      <div className="glass-2 p-3 border border-white/10 shadow-2xl backdrop-blur-md bg-[#0a0c16]/90 max-w-[280px]">
+        <p className="text-zinc-200 text-xs font-bold leading-normal mb-1.5 break-words">{data.name}</p>
+        <div className="space-y-1 text-[10px]">
+          <div className="flex justify-between gap-4">
+            <span className="text-zinc-400">Rank:</span>
+            <span className="text-zinc-100 font-bold">{data.rank}</span>
+          </div>
+          <div className="flex justify-between gap-4">
+            <span className="text-zinc-400">Rating Change:</span>
+            <span className={isPositive ? "text-emerald-400 font-bold" : "text-red-400 font-bold"}>
+              {isPositive ? `+${data.change}` : data.change}
+            </span>
+          </div>
+          <div className="flex justify-between gap-4 border-t border-white/5 pt-1 mt-1">
+            <span className="text-zinc-400 font-medium">New Rating:</span>
+            <span className="text-[#ffbe3c] font-black text-[11px]">{data.rating}</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  return null;
+};
+
 interface DashboardClientProps {
   user: any;
   recommendationsData: {
@@ -49,6 +79,15 @@ export function DashboardClient({ user, recommendationsData }: DashboardClientPr
   const [activeTab, setActiveTab] = React.useState("overview");
   const [hoveredDay, setHoveredDay] = React.useState<any>(null);
 
+  // Locale-independent date formatting helper using UTC dates
+  const formatChartDate = (dateStr: string | Date) => {
+    const d = new Date(dateStr);
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const month = months[d.getUTCMonth()];
+    const day = d.getUTCDate();
+    return `${month} ${day}`;
+  };
+
   // 1. Prepare Contest Rating Data for Chart
   const ratingData = React.useMemo(() => {
     if (!user.contests || user.contests.length === 0) return [];
@@ -57,9 +96,56 @@ export function DashboardClient({ user, recommendationsData }: DashboardClientPr
       rating: c.ratingAfter,
       change: c.ratingChange,
       rank: c.rank,
-      date: new Date(c.date).toLocaleDateString("en-US", { month: "short", year: "numeric" }),
+      dateValue: new Date(c.date).getTime(),
+      dateStr: formatChartDate(c.date),
     }));
   }, [user.contests]);
+
+  const xAxisDomain = React.useMemo(() => {
+    if (ratingData.length === 0) return [0, 0];
+    if (ratingData.length === 1) {
+      const val = ratingData[0].dateValue;
+      return [val - 86400000, val + 86400000]; // +/- 1 day
+    }
+    return ["dataMin", "dataMax"];
+  }, [ratingData]);
+
+  const yAxisDomain = React.useMemo(() => {
+    if (ratingData.length === 0) return [0, 1500];
+    const ratings = ratingData.map((d: any) => d.rating);
+    const minRating = Math.min(...ratings);
+    const maxRating = Math.max(...ratings);
+    const yMin = Math.max(0, minRating - 100);
+    const yMax = maxRating + 100;
+    return [yMin, yMax];
+  }, [ratingData]);
+
+  const visibleBands = React.useMemo(() => {
+    const [yMin, yMax] = yAxisDomain;
+    const bands = [
+      { y1: 0, y2: 1199, fill: "rgba(128, 128, 128, 0.04)" }, // Newbie (Gray)
+      { y1: 1200, y2: 1399, fill: "rgba(0, 180, 0, 0.04)" },     // Pupil (Green)
+      { y1: 1400, y2: 1599, fill: "rgba(0, 180, 180, 0.04)" },   // Specialist (Cyan)
+      { y1: 1600, y2: 1899, fill: "rgba(0, 0, 220, 0.04)" },     // Expert (Blue)
+      { y1: 1900, y2: 2199, fill: "rgba(140, 0, 140, 0.04)" },   // Candidate Master (Purple)
+      { y1: 2200, y2: 2399, fill: "rgba(230, 130, 0, 0.04)" },   // Master (Orange)
+      { y1: 2400, y2: 4000, fill: "rgba(220, 0, 0, 0.04)" },     // Grandmaster (Red)
+    ];
+
+    return bands
+      .filter(b => b.y1 <= yMax && b.y2 >= yMin)
+      .map(b => ({
+        ...b,
+        y1: Math.max(yMin, b.y1),
+        y2: Math.min(yMax, b.y2),
+      }));
+  }, [yAxisDomain]);
+
+  const xAxisTickFormatter = (tick: number) => {
+    const d = new Date(tick);
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    return `${months[d.getUTCMonth()]} ${d.getUTCDate()}`;
+  };
 
   // 2. Prepare Heatmap solves calendar (past 365 days)
   const heatmapDays = React.useMemo(() => {
@@ -313,22 +399,42 @@ export function DashboardClient({ user, recommendationsData }: DashboardClientPr
                   <AreaChart data={ratingData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                     <defs>
                       <linearGradient id="ratingGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#ff6a3d" stopOpacity={0.25} />
+                        <stop offset="5%" stopColor="#ff6a3d" stopOpacity={0.2} />
                         <stop offset="95%" stopColor="#ff6a3d" stopOpacity={0} />
                       </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255, 255, 255, 0.04)" vertical={false} />
-                    <XAxis dataKey="date" stroke="#707384" fontSize={10} tickLine={false} />
-                    <YAxis stroke="#707384" fontSize={10} tickLine={false} domain={["dataMin - 100", "dataMax + 100"]} />
-                    <Tooltip
-                      contentStyle={customTooltipStyle.contentStyle}
-                      labelStyle={customTooltipStyle.labelStyle}
+                    <XAxis
+                      type="number"
+                      dataKey="dateValue"
+                      stroke="#707384"
+                      fontSize={10}
+                      tickLine={false}
+                      domain={xAxisDomain}
+                      tickFormatter={xAxisTickFormatter}
                     />
+                    <YAxis
+                      stroke="#707384"
+                      fontSize={10}
+                      tickLine={false}
+                      domain={yAxisDomain}
+                    />
+                    <Tooltip content={<CustomTooltip />} />
+                    {visibleBands.map((band, idx) => (
+                      <ReferenceArea
+                        key={idx}
+                        y1={band.y1}
+                        y2={band.y2}
+                        fill={band.fill}
+                      />
+                    ))}
                     <Area
-                      type="monotone"
+                      type="linear"
                       dataKey="rating"
                       stroke="#ff6a3d"
                       strokeWidth={2.5}
+                      dot={{ r: 3.5, stroke: "#ff6a3d", strokeWidth: 1.5, fill: "#0a0c16" }}
+                      activeDot={{ r: 5.5, stroke: "#ffbe3c", strokeWidth: 2, fill: "#ffbe3c" }}
                       fillOpacity={1}
                       fill="url(#ratingGrad)"
                       name="Rating"

@@ -16,12 +16,28 @@ export function CalendarClient({ activities }: CalendarClientProps) {
   const [currentDate, setCurrentDate] = React.useState(new Date());
   const [selectedDayInfo, setSelectedDayInfo] = React.useState<any | null>(null);
 
+  // Timezone-safe local YYYY-MM-DD formatter
+  const getLocalDateString = (d: Date) => {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const dayVal = String(d.getDate()).padStart(2, "0");
+    return `${y}-${m}-${dayVal}`;
+  };
+
+  // Timezone-safe UTC YYYY-MM-DD formatter (since DailyActivity.date is stored in UTC)
+  const getUtcDateString = (d: Date) => {
+    const y = d.getUTCFullYear();
+    const m = String(d.getUTCMonth() + 1).padStart(2, "0");
+    const dayVal = String(d.getUTCDate()).padStart(2, "0");
+    return `${y}-${m}-${dayVal}`;
+  };
+
   // Map dates YYYY-MM-DD to activities
   const activityMap = React.useMemo(() => {
     const map = new Map<string, any>();
     activities.forEach((act) => {
       const d = new Date(act.date);
-      const key = d.toISOString().split("T")[0];
+      const key = getUtcDateString(d);
       map.set(key, act);
     });
     return map;
@@ -71,7 +87,7 @@ export function CalendarClient({ activities }: CalendarClientProps) {
     // Fill days of the month
     for (let day = 1; day <= totalDays; day++) {
       const cellDate = new Date(year, month, day);
-      const dateKey = cellDate.toISOString().split("T")[0];
+      const dateKey = getLocalDateString(cellDate);
       const activity = activityMap.get(dateKey) || { solvedCount: 0, submissionCount: 0 };
       
       cells.push({
@@ -147,7 +163,7 @@ export function CalendarClient({ activities }: CalendarClientProps) {
               
               const isSelected = selectedDayInfo?.dateKey === cell.dateKey;
               const hasSolves = cell.solved > 0;
-              const isToday = new Date().toISOString().split("T")[0] === cell.dateKey;
+              const isToday = getLocalDateString(new Date()) === cell.dateKey;
 
               return (
                 <button
