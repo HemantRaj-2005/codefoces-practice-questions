@@ -27,16 +27,177 @@ model SubTopic {
 }
 
 model Problem {
-  id            String    @id @default(cuid())
+  id            String            @id @default(cuid())
   subTopicId    String
-  subTopic      SubTopic  @relation(fields: [subTopicId], references: [id], onDelete: Cascade)
+  subTopic      SubTopic          @relation(fields: [subTopicId], references: [id], onDelete: Cascade)
   problem       String
   rating        Int
   mainTopic     String
   hiddenPattern String?
-  link          String    @unique
-  completed     Boolean   @default(false)
+  link          String            @unique
+  completed     Boolean           @default(false)
   notes         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+  progress      ProblemProgress[]
+  bookmarks     Bookmark[]
+  revisions     Revision[]
+  userNotes     Note[]
+}
+
+model User {
+  id                         String            @id @default(cuid())
+  email                      String            @unique
+  passwordHash               String
+  name                       String
+  username                   String            @unique
+  avatarUrl                  String?
+  joinedDate                 DateTime          @default(now())
+  codeforcesHandle           String?
+  codeforcesRating           Int?
+  codeforcesRank             String?
+  codeforcesMaxRating        Int?
+  codeforcesMaxRank          String?
+  currentStreak              Int               @default(0)
+  longestStreak              Int               @default(0)
+  lastSyncedAt               DateTime?
+  lastProcessedSubmissionId  String?
+  automaticSync              Boolean           @default(false)
+  dailyTarget                Int               @default(5)
+  createdAt                  DateTime          @default(now())
+  updatedAt                  DateTime          @updatedAt
+  progress                   ProblemProgress[]
+  goals                      Goal[]
+  bookmarks                  Bookmark[]
+  revisions                  Revision[]
+  notes                      Note[]
+  activities                 DailyActivity[]
+  contests                   Contest[]
+  notifications              Notification[]
+  syncHistory                SyncHistory[]
+}
+
+model ProblemProgress {
+  id             String    @id @default(cuid())
+  userId         String
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  problemId      String
+  problem        Problem   @relation(fields: [problemId], references: [id], onDelete: Cascade)
+  status         String    // "NOT_STARTED", "ATTEMPTED", "SOLVED", "REVISIT", "BOOKMARKED"
+  firstSolvedAt  DateTime?
+  lastAttemptedAt DateTime?
+  attempts       Int       @default(0)
+  notes          String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@unique([userId, problemId])
+}
+
+model Goal {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title      String
+  target     Int
+  current    Int
+  type       String   // "SOLVED_MONTHLY", "SOLVED_WEEKLY", "RATING", "TOPIC", "STREAK"
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Bookmark {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  problemId  String
+  problem    Problem  @relation(fields: [problemId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+
+  @@unique([userId, problemId])
+}
+
+model Revision {
+  id               String    @id @default(cuid())
+  userId           String
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  problemId        String
+  problem          Problem   @relation(fields: [problemId], references: [id], onDelete: Cascade)
+  difficulty       String    // "EASY", "MEDIUM", "HARD"
+  rating           Int       @default(0)
+  lastRevisionDate DateTime?
+  revisionCount    Int       @default(0)
+  notes            String?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@unique([userId, problemId])
+}
+
+model Note {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  problemId       String
+  problem         Problem  @relation(fields: [problemId], references: [id], onDelete: Cascade)
+  content         String
+  keyObservations String?
+  mistakes        String?
+  approach        String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([userId, problemId])
+}
+
+model DailyActivity {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date            DateTime
+  solvedCount     Int      @default(0)
+  submissionCount Int      @default(0)
+  acceptedCount   Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([userId, date])
+}
+
+model Contest {
+  id             String   @id @default(cuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  contestId      Int
+  name           String
+  date           DateTime
+  rank           Int
+  ratingBefore   Int
+  ratingAfter    Int
+  ratingChange   Int
+  problemsSolved Int
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([userId, contestId])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  content   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model SyncHistory {
+  id                  String   @id @default(cuid())
+  userId              String
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  timestamp           DateTime @default(now())
+  status              String   // "SUCCESS", "FAILED"
+  error               String?
+  newSubmissionsCount Int      @default(0)
 }

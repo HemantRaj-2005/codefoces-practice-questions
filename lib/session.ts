@@ -27,9 +27,9 @@ export async function decrypt(input: string): Promise<any> {
   }
 }
 
-export async function createSession(email: string) {
+export async function createSession(email: string, userId?: string, role: "ADMIN" | "USER" = "USER") {
   const expiresAt = new Date(Date.now() + SESSION_DURATION);
-  const session = await encrypt({ email, expiresAt });
+  const session = await encrypt({ email, userId, role, expiresAt });
   
   const cookieStore = await cookies();
   cookieStore.set(COOKIE_NAME, session, {
@@ -46,7 +46,7 @@ export async function destroySession() {
   cookieStore.delete(COOKIE_NAME);
 }
 
-export async function getSession(): Promise<{ email: string } | null> {
+export async function getSession(): Promise<{ email: string; userId?: string; role: "ADMIN" | "USER" } | null> {
   const cookieStore = await cookies();
   const sessionCookie = cookieStore.get(COOKIE_NAME)?.value;
   if (!sessionCookie) return null;
@@ -59,6 +59,10 @@ export async function getSession(): Promise<{ email: string } | null> {
     return null;
   }
   
-  return { email: payload.email as string };
+  return {
+    email: payload.email as string,
+    userId: payload.userId as string | undefined,
+    role: (payload.role as "ADMIN" | "USER") || "USER",
+  };
 }
 export default getSession;

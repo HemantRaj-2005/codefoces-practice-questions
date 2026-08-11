@@ -25,6 +25,8 @@ export const metadata: Metadata = {
   description: "Personal manual tracking dashboard for Codeforces coding practice.",
 };
 
+import { CommandPalette } from "@/components/CommandPalette";
+
 export default function RootLayout({
   children,
 }: {
@@ -38,7 +40,10 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-[#080A12]">
         <ThemeProvider>
-          <ToastProvider>{children}</ToastProvider>
+          <ToastProvider>
+            {children}
+            <CommandPalette />
+          </ToastProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -101,9 +101,18 @@ export default function LoginPage() {
               >
                 {isPending ? "Authenticating..." : "Sign In"}
               </Button>
+              <div className="text-xs text-zinc-400 mt-1">
+                Don't have an account?{" "}
+                <a
+                  href="/signup"
+                  className="text-zinc-200 hover:text-white underline font-semibold transition-colors"
+                >
+                  Sign Up
+                </a>
+              </div>
               <a
                 href="/"
-                className="text-xs text-zinc-400 hover:text-zinc-200 underline-offset-4 hover:underline mt-2 transition-all duration-200"
+                className="text-xs text-zinc-400 hover:text-zinc-250 underline-offset-4 hover:underline mt-2 transition-all duration-200"
               >
                 ← Return to Homepage
               </a>

@@ -1,5 +1,6 @@
 import { db } from "@/lib/db";
 import { getSession } from "@/lib/session";
+import { redirect } from "next/navigation";
 import HomePageClient from "./HomePageClient";
 
 // Force dynamic rendering to ensure fresh data and session status
@@ -7,6 +8,9 @@ export const dynamic = "force-dynamic";
 
 export default async function Page() {
   const session = await getSession();
+  if (session && session.role === "USER") {
+    redirect("/dashboard");
+  }
   const adminEmail = session?.email || null;
 
   // Fetch topics with relations
