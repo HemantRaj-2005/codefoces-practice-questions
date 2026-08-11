@@ -92,22 +92,22 @@ export function DialogContent({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Overlay */}
+      {/* Overlay — deeper blur */}
       <div
-        className="fixed inset-0 bg-black/70 backdrop-blur-sm transition-opacity duration-300"
+        className="fixed inset-0 bg-black/65 backdrop-blur-md transition-opacity duration-300"
         onClick={() => setOpen(false)}
       />
-      {/* Content Panel */}
+      {/* Content Panel — highest glass elevation */}
       <div
         className={cn(
-          "relative z-50 w-full max-w-lg rounded-2xl glass-3 p-6 shadow-2xl transition-all duration-300 animate-in fade-in zoom-in-95",
+          "relative z-50 w-full max-w-lg rounded-2xl glass-4 glass-reflect p-6 transition-all duration-300 animate-in fade-in zoom-in-95",
           className
         )}
       >
         {children}
         <button
           onClick={() => setOpen(false)}
-          className="absolute right-4 top-4 rounded-md text-zinc-400 hover:text-zinc-100 transition-colors focus:outline-none"
+          className="absolute right-4 top-4 rounded-lg p-1 text-zinc-400 hover:text-zinc-100 hover:bg-white/5 transition-all duration-200 focus:outline-none"
         >
           <X className="h-4 w-4" />
           <span className="sr-only">Close</span>

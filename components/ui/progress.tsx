@@ -18,22 +18,32 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
       gradientClass = "from-red-500 via-yellow-400 to-emerald-500"; // High progress (> 80%): red, yellow & green
     }
 
+    // Glow color matching progress state
+    let glowColor = "rgba(239, 68, 68, 0.3)";
+    if (boundedValue > 40 && boundedValue <= 80) glowColor = "rgba(250, 204, 21, 0.25)";
+    if (boundedValue > 80) glowColor = "rgba(16, 185, 129, 0.25)";
+
     return (
       <div
         ref={ref}
         className={cn(
-          "relative h-2 w-full overflow-hidden rounded-full bg-zinc-800/80 border border-zinc-700/30",
+          "relative h-2 w-full overflow-hidden rounded-full",
+          "bg-white/5 border border-white/6",
+          "shadow-[inset_0_1px_3px_rgba(0,0,0,0.3)]",
           className
         )}
         {...props}
       >
         <div
           className={cn(
-            "h-full w-full flex-1 bg-gradient-to-r transition-all duration-500 ease-out",
+            "h-full w-full flex-1 bg-gradient-to-r transition-all duration-700 ease-out rounded-full",
             gradientClass,
             indicatorClassName
           )}
-          style={{ transform: `translateX(-${100 - boundedValue}%)` }}
+          style={{
+            transform: `translateX(-${100 - boundedValue}%)`,
+            boxShadow: boundedValue > 0 ? `0 0 12px ${glowColor}` : "none",
+          }}
         />
       </div>
     );

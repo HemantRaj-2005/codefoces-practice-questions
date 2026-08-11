@@ -3,6 +3,7 @@ import { AdminCharts } from "@/components/AdminCharts";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { getSession } from "@/lib/session";
 import { redirect } from "next/navigation";
+import { GlassCard } from "@/components/ui/GlassCard";
 import { Activity, CheckSquare, ListPlus, TrendingUp } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -71,53 +72,53 @@ export default async function AdminDashboardPage() {
 
       {/* Stats Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Card className="glass-blue">
+        <GlassCard className="col-span-1" glassClassName="glass-blue relative overflow-hidden">
           <CardContent className="p-6 flex items-center justify-between">
             <div className="space-y-1">
               <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block">Total Problems</span>
-              <span className="text-3xl font-extrabold text-[#716bff]">{total}</span>
+              <span className="text-3xl font-extrabold text-[#716bff] drop-shadow-[0_0_8px_rgba(113,107,255,0.2)]">{total}</span>
             </div>
-            <div className="h-12 w-12 rounded-xl bg-[#4c6fff]/10 border border-[#4c6fff]/20 flex items-center justify-center text-[#4c6fff]">
+            <div className="h-12 w-12 rounded-xl bg-white/5 border border-white/8 flex items-center justify-center text-[#4c6fff] shadow-sm">
               <CheckSquare className="h-5 w-5" />
             </div>
           </CardContent>
-        </Card>
+        </GlassCard>
 
-        <Card className="glass-yellow">
+        <GlassCard className="col-span-1" glassClassName="glass-yellow relative overflow-hidden">
           <CardContent className="p-6 flex items-center justify-between">
             <div className="space-y-1">
               <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block">Completed</span>
-              <span className="text-3xl font-extrabold text-[#ffbe3c]">{completed}</span>
+              <span className="text-3xl font-extrabold text-[#ffbe3c] drop-shadow-[0_0_8px_rgba(255,190,60,0.2)]">{completed}</span>
             </div>
-            <div className="h-12 w-12 rounded-xl bg-[#ffbe3c]/10 border border-[#ffbe3c]/20 flex items-center justify-center text-[#ffbe3c]">
+            <div className="h-12 w-12 rounded-xl bg-white/5 border border-white/8 flex items-center justify-center text-[#ffbe3c] shadow-sm">
               <TrendingUp className="h-5 w-5" />
             </div>
           </CardContent>
-        </Card>
+        </GlassCard>
 
-        <Card className="glass-orange">
+        <GlassCard className="col-span-1" glassClassName="glass-orange relative overflow-hidden">
           <CardContent className="p-6 flex items-center justify-between">
             <div className="space-y-1">
               <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block">Completion %</span>
-              <span className="text-3xl font-extrabold text-[#ff542f]">{percentage}%</span>
+              <span className="text-3xl font-extrabold text-[#ff542f] drop-shadow-[0_0_8px_rgba(255,84,47,0.2)]">{percentage}%</span>
             </div>
-            <div className="h-12 w-12 rounded-xl bg-[#ff542f]/10 border border-[#ff542f]/20 flex items-center justify-center text-[#ff542f]">
+            <div className="h-12 w-12 rounded-xl bg-white/5 border border-white/8 flex items-center justify-center text-[#ff542f] shadow-sm">
               <Activity className="h-5 w-5" />
             </div>
           </CardContent>
-        </Card>
+        </GlassCard>
 
-        <Card className="glass-red">
+        <GlassCard className="col-span-1" glassClassName="glass-red relative overflow-hidden">
           <CardContent className="p-6 flex items-center justify-between">
             <div className="space-y-1">
               <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block">Remaining</span>
-              <span className="text-3xl font-extrabold text-[#ff4646]">{remaining}</span>
+              <span className="text-3xl font-extrabold text-[#ff4646] drop-shadow-[0_0_8px_rgba(255,70,70,0.2)]">{remaining}</span>
             </div>
-            <div className="h-12 w-12 rounded-xl bg-[#ff4646]/10 border border-[#ff4646]/20 flex items-center justify-center text-[#ff4646]">
+            <div className="h-12 w-12 rounded-xl bg-white/5 border border-white/8 flex items-center justify-center text-[#ff4646] shadow-sm">
               <ListPlus className="h-5 w-5" />
             </div>
           </CardContent>
-        </Card>
+        </GlassCard>
       </div>
 
       {/* Visual Charts */}

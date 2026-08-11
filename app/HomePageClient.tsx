@@ -13,6 +13,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table";
 import { toggleProblemCompletion, updateProblemNotes } from "@/actions/problems";
+import { GlassCard } from "@/components/ui/GlassCard";
+import { motion } from "motion/react";
 import { ExternalLink, Search, SlidersHorizontal, BookOpen, CheckCircle2, Circle, AlertCircle, RefreshCw, LayoutGrid, List } from "lucide-react";
 
 // Inline Codeforces Logo SVG component
@@ -313,66 +315,66 @@ export default function HomePageClient({
     >
       {/* Homepage Stat Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-6 gap-4">
-        <Card className="col-span-1 glass-blue">
+        <GlassCard className="col-span-1" glassClassName="glass-blue relative overflow-hidden">
           <CardHeader className="p-4 pb-0">
             <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Total Problems</span>
           </CardHeader>
           <CardContent className="p-4 pt-1">
-            <span className="text-2xl font-bold text-[#716bff]">{currentStats.total}</span>
+            <span className="text-2xl font-extrabold text-[#716bff] drop-shadow-[0_0_8px_rgba(113,107,255,0.2)]">{currentStats.total}</span>
           </CardContent>
-        </Card>
+        </GlassCard>
 
-        <Card className="col-span-1 glass-yellow">
+        <GlassCard className="col-span-1" glassClassName="glass-yellow relative overflow-hidden">
           <CardHeader className="p-4 pb-0">
-            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest font-sans">Completed</span>
+            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Completed</span>
           </CardHeader>
-          <CardContent className="p-4 pt-1 flex items-baseline gap-2">
-            <span className="text-2xl font-bold text-[#ffbe3c]">{currentStats.completed}</span>
+          <CardContent className="p-4 pt-1">
+            <span className="text-2xl font-extrabold text-[#ffbe3c] drop-shadow-[0_0_8px_rgba(255,190,60,0.2)]">{currentStats.completed}</span>
           </CardContent>
-        </Card>
+        </GlassCard>
 
-        <Card className="col-span-1 glass-red">
+        <GlassCard className="col-span-1" glassClassName="glass-red relative overflow-hidden">
           <CardHeader className="p-4 pb-0">
             <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Remaining</span>
           </CardHeader>
           <CardContent className="p-4 pt-1">
-            <span className="text-2xl font-bold text-[#ff4646]">{currentStats.remaining}</span>
+            <span className="text-2xl font-extrabold text-[#ff4646] drop-shadow-[0_0_8px_rgba(255,70,70,0.2)]">{currentStats.remaining}</span>
           </CardContent>
-        </Card>
+        </GlassCard>
 
-        <Card className="col-span-1 glass-purple">
+        <GlassCard className="col-span-1" glassClassName="glass-purple relative overflow-hidden">
           <CardHeader className="p-4 pb-0">
             <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Topics</span>
           </CardHeader>
           <CardContent className="p-4 pt-1">
-            <span className="text-2xl font-bold text-[#8c5aff]">{currentStats.topicsCount}</span>
+            <span className="text-2xl font-extrabold text-[#8c5aff] drop-shadow-[0_0_8px_rgba(140,90,255,0.2)]">{currentStats.topicsCount}</span>
           </CardContent>
-        </Card>
+        </GlassCard>
 
-        <Card className="col-span-1 glass-blue">
+        <GlassCard className="col-span-1" glassClassName="glass-blue relative overflow-hidden">
           <CardHeader className="p-4 pb-0">
             <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Subtopics</span>
           </CardHeader>
           <CardContent className="p-4 pt-1">
-            <span className="text-2xl font-bold text-[#4c6fff]">{currentStats.subtopicsCount}</span>
+            <span className="text-2xl font-extrabold text-[#4c6fff] drop-shadow-[0_0_8px_rgba(76,111,255,0.2)]">{currentStats.subtopicsCount}</span>
           </CardContent>
-        </Card>
+        </GlassCard>
 
-        <Card className="col-span-1 glass-orange">
+        <GlassCard className="col-span-1" glassClassName="glass-orange relative overflow-hidden">
           <CardHeader className="p-4 pb-0">
             <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Completion %</span>
           </CardHeader>
           <CardContent className="p-4 pt-1">
-            <span className="text-2xl font-bold text-[#ff542f]">{currentStats.percentage}%</span>
+            <span className="text-2xl font-extrabold text-[#ff542f] drop-shadow-[0_0_8px_rgba(255,84,47,0.2)]">{currentStats.percentage}%</span>
           </CardContent>
-        </Card>
+        </GlassCard>
       </div>
 
       {/* Search & Filter Toolbar */}
-      <Card className="glass-1 p-4 rounded-2xl">
+      <div className="glass-2 p-4 rounded-2xl border border-white/8 shadow-lg relative overflow-hidden glass-reflect">
         <div className="flex flex-col md:flex-row md:items-center gap-4">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-3 h-4 w-4 text-zinc-500" />
+            <Search className="absolute left-3.5 top-3 h-4 w-4 text-zinc-500" />
             <Input
               type="text"
               placeholder="Search problems, main topics, hidden patterns..."
@@ -383,15 +385,15 @@ export default function HomePageClient({
           </div>
 
           <div className="flex items-center gap-2">
-            <div className="flex items-center border border-white/5 bg-black/25 rounded-lg p-0.5 shrink-0">
+            <div className="flex items-center border border-white/6 bg-black/25 rounded-xl p-0.5 shrink-0 shadow-inner">
               <button
                 type="button"
                 onClick={() => setViewMode("grid")}
                 className={cn(
-                  "p-1.5 rounded-md transition-all duration-200 cursor-pointer",
+                  "p-1.5 rounded-lg transition-all duration-200 cursor-pointer",
                   viewMode === "grid"
-                    ? "bg-zinc-800 text-white shadow-inner"
-                    : "text-zinc-500 hover:text-zinc-300"
+                    ? "bg-white/10 text-white shadow-md border border-white/5"
+                    : "text-zinc-550 hover:text-zinc-300 border border-transparent"
                 )}
                 title="Grid View"
               >
@@ -401,10 +403,10 @@ export default function HomePageClient({
                 type="button"
                 onClick={() => setViewMode("table")}
                 className={cn(
-                  "p-1.5 rounded-md transition-all duration-200 cursor-pointer",
+                  "p-1.5 rounded-lg transition-all duration-200 cursor-pointer",
                   viewMode === "table"
-                    ? "bg-zinc-800 text-white shadow-inner"
-                    : "text-zinc-500 hover:text-zinc-300"
+                    ? "bg-white/10 text-white shadow-md border border-white/5"
+                    : "text-zinc-550 hover:text-zinc-300 border border-transparent"
                 )}
                 title="Table View"
               >
@@ -426,7 +428,7 @@ export default function HomePageClient({
             <select
               value={sortBy}
               onChange={(e: any) => setSortBy(e.target.value)}
-              className="h-9 rounded-lg border border-white/8 bg-black/25 px-3 text-xs text-zinc-300 focus-visible:outline-none focus:border-[#ff542f] focus:ring-1 focus:ring-[#ff542f]/20 transition-all duration-200"
+              className="h-9 rounded-xl border border-white/8 bg-black/25 px-3 text-xs text-zinc-300 focus-visible:outline-none focus:border-[#ff6a3d] focus:ring-2 focus:ring-[#ff6a3d]/15 shadow-inner transition-all duration-200 cursor-pointer"
             >
               <option value="rating-asc">Sort: Rating (Low to High)</option>
               <option value="rating-desc">Sort: Rating (High to Low)</option>
@@ -440,14 +442,14 @@ export default function HomePageClient({
 
         {/* Collapsible Advanced Filters */}
         {showFilters && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-4 pt-4 border-t border-white/5 animate-in slide-in-from-top-2 duration-200">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-4 pt-4 border-t border-white/6 animate-in slide-in-from-top-2 duration-300">
             {/* Completion Filter */}
             <div className="space-y-1">
-              <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest block">Status</label>
+              <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest block pl-1">Status</label>
               <select
                 value={completedFilter}
                 onChange={(e: any) => setCompletedFilter(e.target.value)}
-                className="w-full h-10 rounded-lg border border-white/8 bg-black/25 px-3 text-sm text-zinc-300 focus-visible:outline-none focus:border-[#ff542f] focus:ring-1 focus:ring-[#ff542f]/20 transition-all duration-200"
+                className="w-full h-10 rounded-xl border border-white/8 bg-black/25 px-3 text-sm text-zinc-300 focus-visible:outline-none focus:border-[#ff6a3d] focus:ring-2 focus:ring-[#ff6a3d]/15 transition-all duration-200 cursor-pointer"
               >
                 <option value="all">All Problems</option>
                 <option value="completed">Completed</option>
@@ -457,11 +459,11 @@ export default function HomePageClient({
 
             {/* Main Topic Filter */}
             <div className="space-y-1">
-              <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest block">Main Topic</label>
+              <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest block pl-1">Main Topic</label>
               <select
                 value={selectedMainTopic}
                 onChange={(e) => setSelectedMainTopic(e.target.value)}
-                className="w-full h-10 rounded-lg border border-white/8 bg-black/25 px-3 text-sm text-zinc-300 focus-visible:outline-none focus:border-[#ff542f] focus:ring-1 focus:ring-[#ff542f]/20 transition-all duration-200"
+                className="w-full h-10 rounded-xl border border-white/8 bg-black/25 px-3 text-sm text-zinc-300 focus-visible:outline-none focus:border-[#ff6a3d] focus:ring-2 focus:ring-[#ff6a3d]/15 transition-all duration-200 cursor-pointer"
               >
                 <option value="all">All Topics</option>
                 {uniqueMainTopics.map((t) => (
@@ -474,7 +476,7 @@ export default function HomePageClient({
 
             {/* Rating range */}
             <div className="space-y-1 col-span-1 sm:col-span-2">
-              <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest block">Rating Range</label>
+              <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest block pl-1">Rating Range</label>
               <div className="flex gap-2 items-center">
                 <Input
                   type="number"
@@ -483,7 +485,7 @@ export default function HomePageClient({
                   onChange={(e) => setMinRating(e.target.value)}
                   className="h-10"
                 />
-                <span className="text-zinc-600 text-xs">to</span>
+                <span className="text-zinc-500 text-xs">to</span>
                 <Input
                   type="number"
                   placeholder="Max Rating"
@@ -495,39 +497,37 @@ export default function HomePageClient({
             </div>
           </div>
         )}
-      </Card>
+      </div>
 
       {/* Dynamic Topics Display */}
       {processedTopics.length > 0 ? (
         <Accordion type="multiple" defaultValue={processedTopics.map((t) => t.id)} className="space-y-4">
           {processedTopics.map((topic) => {
-            // Count total and completed in this topic
             const topicProblems = topic.subTopics.flatMap((st) => st.problems);
             const topicTotal = topicProblems.length;
             const topicCompleted = topicProblems.filter((p) => p.completed).length;
-            const topicPercentage = topicTotal > 0 ? Math.round((topicCompleted / topicTotal) * 105) / 105 : 0; // standard rounding below
             const finalPercentage = topicTotal > 0 ? Math.round((topicCompleted / topicTotal) * 100) : 0;
 
             return (
               <AccordionItem
                 key={topic.id}
                 value={topic.id}
-                className="border border-zinc-800 bg-zinc-950/15 rounded-xl overflow-hidden px-4 md:px-6"
+                className="border border-white/6 bg-white/1 rounded-2xl overflow-hidden px-4 md:px-6 shadow-md"
               >
-                <AccordionTrigger className="hover:no-underline py-5">
+                <AccordionTrigger className="hover:no-underline py-5 hover:bg-transparent">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 flex-1 pr-4">
                     <div className="flex items-center gap-3">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-900 border border-zinc-800">
-                        <BookOpen className="h-4 w-4 text-indigo-400" />
+                      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/4 border border-white/8 shadow-sm">
+                        <BookOpen className="h-4.5 w-4.5 text-[#9b6dff]" />
                       </div>
                       <span className="text-base font-bold text-white text-left">{topic.name}</span>
                     </div>
                     {topicTotal > 0 && (
                       <div className="flex items-center gap-4 min-w-[200px] sm:min-w-[250px] w-full sm:w-auto" onClick={(e) => e.stopPropagation()}>
                         <div className="flex-1">
-                          <div className="flex justify-between text-[10px] font-semibold text-zinc-500 mb-1">
+                          <div className="flex justify-between text-[10px] font-bold text-zinc-400 mb-1">
                             <span>{topicCompleted} / {topicTotal} Solved</span>
-                            <span>{finalPercentage}%</span>
+                            <span className="text-[#ffbe3c]">{finalPercentage}%</span>
                           </div>
                           <Progress value={finalPercentage} className="h-1.5" />
                         </div>
@@ -535,7 +535,7 @@ export default function HomePageClient({
                     )}
                   </div>
                 </AccordionTrigger>
-                <AccordionContent className="pt-2 pb-6 border-t border-zinc-900/60">
+                <AccordionContent className="pt-2 pb-6 border-t border-white/5 bg-transparent">
                   {topic.subTopics.length > 0 ? (
                     <Accordion type="multiple">
                        {topic.subTopics.map((sub) => {
@@ -544,29 +544,29 @@ export default function HomePageClient({
                         const subPercentage = subTotal > 0 ? Math.round((subCompleted / subTotal) * 100) : 0;
 
                         // Dynamic gradient based on percentage solved
-                        let subGradientClass = "from-red-500 to-red-500"; // <= 40% completely red
+                        let subGradientClass = "from-red-500 to-red-500";
                         if (subPercentage > 40 && subPercentage <= 80) {
-                          subGradientClass = "from-red-500 via-red-400 to-yellow-400"; // 40% - 80% red & yellow
+                          subGradientClass = "from-red-500 via-red-400 to-yellow-400";
                         } else if (subPercentage > 80) {
-                          subGradientClass = "from-red-500 via-yellow-400 to-emerald-500"; // > 80% red, yellow & green
+                          subGradientClass = "from-red-500 via-yellow-400 to-emerald-500";
                         }
 
                         return (
-                          <AccordionItem key={sub.id} value={sub.id}>
-                            <AccordionTrigger className="hover:bg-zinc-900/10">
+                          <AccordionItem key={sub.id} value={sub.id} className="border border-white/5 bg-white/1 shadow-sm mt-3 first:mt-0">
+                            <AccordionTrigger className="hover:bg-white/3 py-3.5 px-4">
                               <div className="flex flex-col sm:flex-row sm:items-center justify-between flex-1 pr-4 gap-2">
-                                <span className="text-sm font-semibold text-zinc-200">{sub.name}</span>
+                                <span className="text-sm font-bold text-zinc-200">{sub.name}</span>
                                 {subTotal > 0 && (
-                                  <div className="flex items-center gap-3 text-xs text-zinc-500 font-medium">
+                                  <div className="flex items-center gap-3 text-xs text-zinc-400 font-semibold">
                                     <span>{subCompleted}/{subTotal} Solved</span>
-                                    <div className="w-16 h-1 rounded-full bg-zinc-800 overflow-hidden">
+                                    <div className="w-16 h-1 rounded-full bg-black/35 border border-white/5 overflow-hidden">
                                       <div className={cn("h-full bg-gradient-to-r", subGradientClass)} style={{ width: `${subPercentage}%` }} />
                                     </div>
                                   </div>
                                 )}
                               </div>
                             </AccordionTrigger>
-                            <AccordionContent>
+                            <AccordionContent className="px-4 py-4 border-t border-white/5 bg-black/10">
                               {sub.problems.length > 0 ? (
                                 viewMode === "grid" ? (
                                   <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
@@ -574,31 +574,36 @@ export default function HomePageClient({
                                       <div
                                         key={problem.id}
                                         className={cn(
-                                          "relative flex flex-col p-5 rounded-xl border transition-all duration-300",
+                                          "relative flex flex-col p-5 rounded-2xl border transition-all duration-300 float-card shadow-lg",
                                           problem.completed
-                                            ? "bg-emerald-950/5 border-emerald-900/30 shadow-sm"
-                                            : "bg-zinc-900/20 border-zinc-800/80 hover:border-zinc-700/60"
+                                            ? "bg-emerald-950/10 border-emerald-500/20 shadow-[0_4px_16px_rgba(16,185,129,0.06),inset_0_1px_0_rgba(255,255,255,0.04)]"
+                                            : "glass-2 border-white/8 hover:border-white/15"
                                         )}
                                       >
-                                        {/* Top Row: Completed & Title & Badges */}
+                                        {/* Completed Glow Effect */}
+                                        {problem.completed && (
+                                          <div className="absolute inset-0 bg-emerald-500/[0.01] rounded-2xl pointer-events-none" />
+                                        )}
+
+                                        {/* Top Row */}
                                         <div className="flex items-start justify-between gap-3">
                                           <div className="flex items-start gap-3">
                                             {/* Completed Checkbox */}
                                             <button
                                               type="button"
                                               onClick={() => handleToggleCompletion(problem.id, problem.completed)}
-                                              className="mt-1 flex-shrink-0 text-zinc-500 hover:text-white transition-colors focus:outline-none"
+                                              className="mt-1 flex-shrink-0 text-zinc-550 hover:text-white transition-colors focus:outline-none cursor-pointer"
                                             >
                                               {problem.completed ? (
-                                                <CheckCircle2 className="h-5 w-5 text-emerald-500 fill-emerald-955/20" />
+                                                <CheckCircle2 className="h-5 w-5 text-emerald-400 drop-shadow-[0_0_6px_rgba(52,211,153,0.3)]" />
                                               ) : (
-                                                <Circle className="h-5 w-5 text-zinc-600" />
+                                                <Circle className="h-5 w-5 text-zinc-600 hover:text-zinc-400" />
                                               )}
                                             </button>
                                             
-                                            {/* Problem info */}
+                                            {/* Problem Info */}
                                             <div>
-                                              <h4 className={cn("font-bold text-sm leading-snug tracking-tight text-zinc-100", problem.completed && "line-through text-zinc-500")}>
+                                              <h4 className={cn("font-bold text-sm leading-snug tracking-tight text-zinc-150", problem.completed && "line-through text-zinc-500")}>
                                                 {problem.problem}
                                               </h4>
                                               
@@ -613,12 +618,12 @@ export default function HomePageClient({
                                             </div>
                                           </div>
 
-                                          {/* Codeforces Link with Logo & ID */}
+                                          {/* Codeforces Link */}
                                           <a
                                             href={problem.link}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-zinc-800 bg-zinc-950/40 text-xs font-bold text-zinc-300 hover:bg-zinc-900 hover:text-white transition-all duration-200 shrink-0 self-start mt-0.5"
+                                            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-white/6 bg-white/4 text-xs font-bold text-zinc-300 hover:bg-white/8 hover:text-white hover:border-white/10 transition-all duration-250 shrink-0 self-start mt-0.5 shadow-sm"
                                             title="Open on Codeforces"
                                           >
                                             <CodeforcesIcon />
@@ -626,23 +631,23 @@ export default function HomePageClient({
                                           </a>
                                         </div>
 
-                                        {/* Bottom Row: Optional notes */}
-                                        <div className="mt-4 pt-3 border-t border-zinc-850">
-                                          <label className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest block mb-1">
+                                        {/* Notes Section */}
+                                        <div className="mt-4 pt-3 border-t border-white/5 relative z-10">
+                                          <label className="text-[9px] font-bold text-zinc-550 uppercase tracking-widest block mb-1">
                                             Notes
                                           </label>
-                                          <Textarea
+                                          <textarea
                                             placeholder="Type notes here... autosaves instantly"
                                             value={notesState[problem.id] ?? ""}
                                             onChange={(e) => handleNoteChange(problem.id, e.target.value)}
-                                            className="bg-transparent border-0 hover:bg-zinc-955/20 focus:bg-zinc-955/30 p-2 min-h-[45px] text-xs text-zinc-300 placeholder:text-zinc-650 focus-visible:ring-1 focus-visible:ring-zinc-800 focus-visible:border-zinc-800 focus:outline-none transition-all rounded-md"
+                                            className="w-full bg-transparent border-0 hover:bg-white/3 focus:bg-white/5 p-2 min-h-[45px] text-xs text-zinc-300 placeholder:text-zinc-600 focus:outline-none transition-all rounded-xl focus:ring-1 focus:ring-white/8"
                                           />
                                         </div>
                                       </div>
                                     ))}
                                   </div>
                                 ) : (
-                                  <div className="overflow-x-auto">
+                                  <div className="overflow-x-auto rounded-2xl border border-white/6 shadow-lg">
                                     <Table>
                                       <TableHeader>
                                         <TableRow>
@@ -660,10 +665,10 @@ export default function HomePageClient({
                                           <TableRow
                                             key={problem.id}
                                             className={cn(
-                                              "transition-colors duration-200",
+                                              "transition-colors duration-250",
                                               problem.completed
-                                                ? "bg-[#ffbe3c]/4 hover:bg-[#ffbe3c]/8 border-b border-[#ffbe3c]/12 text-[#ffbe3c]/90"
-                                                : "bg-[#ff542f]/2 hover:bg-[#ff542f]/5 border-b border-[#ff542f]/8 text-[#ff542f]/90"
+                                                ? "bg-emerald-950/10 hover:bg-emerald-950/15 border-b border-emerald-500/10 text-emerald-300/90"
+                                                : "bg-white/2 hover:bg-white/4 border-b border-white/5 text-zinc-350"
                                             )}
                                           >
                                             {/* Completed Checkbox */}
@@ -674,16 +679,16 @@ export default function HomePageClient({
                                                 className="text-inherit hover:text-white transition-colors focus:outline-none cursor-pointer"
                                               >
                                                 {problem.completed ? (
-                                                  <CheckCircle2 className="h-5 w-5 text-[#ffbe3c]" />
+                                                  <CheckCircle2 className="h-5 w-5 text-emerald-400 drop-shadow-[0_0_6px_rgba(52,211,153,0.3)]" />
                                                 ) : (
-                                                  <Circle className="h-5 w-5 text-zinc-600" />
+                                                  <Circle className="h-5 w-5 text-zinc-600 hover:text-zinc-450" />
                                                 )}
                                               </button>
                                             </TableCell>
 
                                             {/* Problem Name */}
-                                            <TableCell className="font-semibold text-inherit align-middle">
-                                              <span className={cn(problem.completed && "line-through opacity-70")}>
+                                            <TableCell className="font-bold text-inherit align-middle">
+                                              <span className={cn(problem.completed && "line-through opacity-60 text-zinc-550")}>
                                                 {problem.problem}
                                               </span>
                                             </TableCell>
@@ -703,7 +708,7 @@ export default function HomePageClient({
                                               {problem.hiddenPattern ? (
                                                 <Badge variant="pattern">{problem.hiddenPattern}</Badge>
                                               ) : (
-                                                <span className="text-zinc-500">-</span>
+                                                <span className="text-zinc-600">-</span>
                                               )}
                                             </TableCell>
 
@@ -713,7 +718,7 @@ export default function HomePageClient({
                                                 href={problem.link}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-white/8 bg-white/4 text-xs font-bold text-zinc-300 hover:bg-white/8 hover:text-white transition-all duration-200"
+                                                className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-white/6 bg-white/4 text-xs font-bold text-zinc-350 hover:bg-white/8 hover:text-white transition-all duration-200"
                                                 title="Open on Codeforces"
                                               >
                                                 <CodeforcesIcon />
@@ -728,7 +733,7 @@ export default function HomePageClient({
                                                 placeholder="Type notes here... autosaves"
                                                 value={notesState[problem.id] ?? ""}
                                                 onChange={(e) => handleNoteChange(problem.id, e.target.value)}
-                                                className="w-full bg-transparent border-0 hover:bg-white/5 focus:bg-white/10 px-2 py-1 text-xs text-inherit placeholder:text-zinc-500 focus:outline-none transition-all rounded"
+                                                className="w-full bg-transparent border-0 hover:bg-white/4 focus:bg-white/8 px-2 py-1 text-xs text-inherit placeholder:text-zinc-600 focus:outline-none transition-all rounded-lg"
                                               />
                                             </TableCell>
                                           </TableRow>
@@ -748,7 +753,7 @@ export default function HomePageClient({
                       })}
                     </Accordion>
                   ) : (
-                    <div className="text-center py-8 text-zinc-500 text-sm">
+                    <div className="text-center py-8 text-zinc-550 text-sm">
                       No subtopics created for this topic.
                     </div>
                   )}
@@ -758,9 +763,9 @@ export default function HomePageClient({
           })}
         </Accordion>
       ) : (
-        <Card className="border-zinc-800 bg-zinc-950/20 border-dashed py-16 px-4 text-center">
+        <div className="glass-2 border-dashed border-white/8 py-16 px-4 text-center rounded-2xl relative overflow-hidden glass-reflect shadow-md">
           <div className="flex flex-col items-center justify-center max-w-sm mx-auto space-y-4">
-            <div className="h-12 w-12 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-500 bg-zinc-950/40">
+            <div className="h-12 w-12 rounded-full border border-white/8 flex items-center justify-center text-zinc-550 bg-white/3">
               <AlertCircle className="h-6 w-6" />
             </div>
             <div>
@@ -780,13 +785,13 @@ export default function HomePageClient({
                   setMaxRating("");
                   setSelectedMainTopic("all");
                 }}
-                className="mt-2 text-zinc-300 border-zinc-850 hover:bg-zinc-900"
+                className="mt-2"
               >
                 Clear Filters
               </Button>
             )}
           </div>
-        </Card>
+        </div>
       )}
     </SidebarLayout>
   );

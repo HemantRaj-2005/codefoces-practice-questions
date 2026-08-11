@@ -323,12 +323,12 @@ export default function ProblemsClient({
     }
   };
 
-  return (
+return (
     <div className="space-y-6">
       {/* Header Panel */}
       <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-white">Manage Problems</h1>
+          <h1 className="text-2xl font-extrabold tracking-tight text-white">Manage Problems</h1>
           <p className="text-xs text-zinc-400 mt-1">
             Manual problem cataloging, metadata editing, and CSV ingestion.
           </p>
@@ -343,14 +343,14 @@ export default function ProblemsClient({
               const firstSub = topics[0]?.subTopics[0];
               setCsvSubTopicId(firstSub?.id || "");
             }}
-            className="border-zinc-800 hover:bg-zinc-900 flex items-center gap-2 text-zinc-300"
+            className="flex items-center gap-2 text-zinc-300"
           >
             <Upload className="h-4 w-4" />
             Upload CSV
           </Button>
           <Button
             onClick={openCreateProblem}
-            className="bg-indigo-650 hover:bg-indigo-700 text-white font-medium flex items-center gap-2"
+            className="glass-btn-primary flex items-center gap-2"
           >
             <Plus className="h-4 w-4" />
             Add Problem
@@ -359,12 +359,12 @@ export default function ProblemsClient({
       </div>
 
       {/* Toolbar Search / Topic Filters */}
-      <Card className="glass-1 p-4 rounded-2xl">
+      <div className="glass-2 p-4 rounded-2xl border border-white/8 shadow-lg relative overflow-hidden glass-reflect">
         <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
           {/* Search form */}
           <form onSubmit={handleSearchSubmit} className="flex gap-2 w-full lg:max-w-md">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-3 h-4 w-4 text-zinc-500" />
+              <Search className="absolute left-3.5 top-3 h-4 w-4 text-zinc-555" />
               <Input
                 type="text"
                 placeholder="Search name, topic, patterns..."
@@ -384,7 +384,7 @@ export default function ProblemsClient({
             <select
               value={filters.topicId}
               onChange={(e) => updateQuery({ topic: e.target.value, subtopic: "" })}
-              className="h-10 rounded-lg border border-white/8 bg-black/25 px-3 text-xs text-zinc-350 focus-visible:outline-none focus:border-[#ff542f] focus:ring-1 focus:ring-[#ff542f]/20 transition-all duration-200"
+              className="h-10 rounded-xl border border-white/8 bg-black/25 px-3 text-xs text-zinc-300 focus-visible:outline-none focus:border-[#ff6a3d] focus:ring-2 focus:ring-[#ff6a3d]/15 shadow-inner transition-all duration-200 cursor-pointer"
             >
               <option value="">Filter by Topic (All)</option>
               {topics.map((t) => (
@@ -398,7 +398,7 @@ export default function ProblemsClient({
             <select
               value={filters.subtopicId}
               onChange={(e) => updateQuery({ subtopic: e.target.value })}
-              className="h-10 rounded-lg border border-white/8 bg-black/25 px-3 text-xs text-zinc-355 focus-visible:outline-none focus:border-[#ff542f] focus:ring-1 focus:ring-[#ff542f]/20 transition-all duration-200"
+              className="h-10 rounded-xl border border-white/8 bg-black/25 px-3 text-xs text-zinc-300 focus-visible:outline-none focus:border-[#ff6a3d] focus:ring-2 focus:ring-[#ff6a3d]/15 shadow-inner transition-all duration-200 cursor-pointer"
               disabled={!filters.topicId}
             >
               <option value="">Filter by Subtopic (All)</option>
@@ -415,7 +415,7 @@ export default function ProblemsClient({
               <Button
                 variant="destructive"
                 onClick={() => setBulkDeleteOpen(true)}
-                className="flex items-center gap-2 h-10"
+                className="flex items-center gap-2 h-10 hover:-translate-y-0.5 transition-transform"
               >
                 <Trash2 className="h-4 w-4" />
                 Delete Selected ({selectedIds.length})
@@ -423,10 +423,10 @@ export default function ProblemsClient({
             )}
           </div>
         </div>
-      </Card>
+      </div>
 
       {/* Main Problems Table */}
-      <Card className="overflow-hidden">
+      <div className="rounded-2xl border border-white/6 overflow-hidden shadow-lg">
         {problems.length > 0 ? (
           <div className="overflow-x-auto">
             <Table>
@@ -437,7 +437,7 @@ export default function ProblemsClient({
                       type="checkbox"
                       checked={problems.length > 0 && selectedIds.length === problems.length}
                       onChange={toggleSelectAll}
-                      className="rounded border-zinc-700 bg-zinc-900 text-indigo-650 focus:ring-indigo-600 h-4 w-4"
+                      className="rounded border-white/10 bg-black/40 text-[#ff6a3d] focus:ring-[#ff6a3d]/30 h-4 w-4 cursor-pointer"
                     />
                   </TableHead>
                   <TableHead>Problem</TableHead>
@@ -453,10 +453,10 @@ export default function ProblemsClient({
                   <TableRow
                     key={p.id}
                     className={cn(
-                      "transition-colors duration-200",
+                      "transition-colors duration-250",
                       p.completed
-                        ? "bg-[#ffbe3c]/4 hover:bg-[#ffbe3c]/8 border-b border-[#ffbe3c]/12 text-[#ffbe3c]/90"
-                        : "bg-[#ff542f]/2 hover:bg-[#ff542f]/5 border-b border-[#ff542f]/8 text-[#ff542f]/90"
+                        ? "bg-emerald-950/10 hover:bg-emerald-950/15 border-b border-emerald-500/10 text-emerald-300/90"
+                        : "bg-white/2 hover:bg-white/4 border-b border-white/5 text-zinc-350"
                     )}
                   >
                     <TableCell className="text-center">
@@ -464,10 +464,10 @@ export default function ProblemsClient({
                         type="checkbox"
                         checked={selectedIds.includes(p.id)}
                         onChange={() => toggleSelectProblem(p.id)}
-                        className="rounded border-zinc-700 bg-zinc-900 text-indigo-650 focus:ring-indigo-600 h-4 w-4"
+                        className="rounded border-white/10 bg-black/40 text-[#ff6a3d] focus:ring-[#ff6a3d]/30 h-4 w-4 cursor-pointer"
                       />
                     </TableCell>
-                    <TableCell className="font-semibold text-inherit max-w-xs truncate">
+                    <TableCell className="font-bold text-inherit max-w-xs truncate">
                       <a
                         href={p.link}
                         target="_blank"
@@ -484,20 +484,20 @@ export default function ProblemsClient({
                       <Badge variant="topic">{p.mainTopic}</Badge>
                     </TableCell>
                     <TableCell className="text-zinc-400">
-                      {p.hiddenPattern ? <Badge variant="pattern">{p.hiddenPattern}</Badge> : "-"}
+                      {p.hiddenPattern ? <Badge variant="pattern">{p.hiddenPattern}</Badge> : <span className="text-zinc-600">-</span>}
                     </TableCell>
                     <TableCell className="text-xs text-zinc-400">
-                      <span className="text-zinc-500 font-semibold">{p.subTopic?.topic?.name}</span>
+                      <span className="text-zinc-500 font-bold uppercase tracking-wider">{p.subTopic?.topic?.name}</span>
                       {" → "}
-                      <span>{p.subTopic?.name}</span>
+                      <span className="text-zinc-300 font-medium">{p.subTopic?.name}</span>
                     </TableCell>
                     <TableCell className="text-right">
-                      <div className="flex justify-end gap-1.5">
+                      <div className="flex justify-end gap-1">
                         <Button
                           variant="ghost"
                           size="icon"
                           onClick={() => openEditProblem(p)}
-                          className="h-8 w-8 text-zinc-400 hover:text-white hover:bg-zinc-900"
+                          className="h-8 w-8 text-zinc-450 hover:text-white hover:bg-white/5"
                         >
                           <Edit2 className="h-3.5 w-3.5" />
                         </Button>
@@ -505,7 +505,7 @@ export default function ProblemsClient({
                           variant="ghost"
                           size="icon"
                           onClick={() => confirmDeleteProblem(p.id)}
-                          className="h-8 w-8 text-red-400 hover:text-red-300 hover:bg-zinc-900"
+                          className="h-8 w-8 text-red-400 hover:text-red-350 hover:bg-red-500/10"
                         >
                           <Trash2 className="h-3.5 w-3.5" />
                         </Button>
@@ -517,16 +517,16 @@ export default function ProblemsClient({
             </Table>
           </div>
         ) : (
-          <div className="py-16 text-center text-zinc-500 text-sm">
+          <div className="py-16 text-center text-zinc-500 text-sm font-semibold bg-white/1">
             No problems match your current criteria. Create or upload some problems.
           </div>
         )}
-      </Card>
+      </div>
 
       {/* Pagination Footer */}
       {pagination.totalPages > 1 && (
         <div className="flex items-center justify-between mt-4">
-          <span className="text-xs text-zinc-400">
+          <span className="text-xs text-zinc-400 font-medium">
             Showing <strong className="text-zinc-200">{problems.length}</strong> of{" "}
             <strong className="text-zinc-200">{pagination.totalItems}</strong> problems
           </span>
@@ -537,12 +537,12 @@ export default function ProblemsClient({
               size="sm"
               onClick={() => updateQuery({ page: String(pagination.page - 1) })}
               disabled={pagination.page <= 1}
-              className="flex items-center gap-1 border-zinc-800 hover:bg-zinc-900"
+              className="flex items-center gap-1"
             >
               <ChevronLeft className="h-4 w-4" />
               Previous
             </Button>
-            <div className="flex items-center justify-center px-4 rounded border border-zinc-850 text-xs font-semibold bg-zinc-950/40 text-zinc-300">
+            <div className="flex items-center justify-center px-4 rounded-xl border border-white/6 text-xs font-bold bg-black/25 text-zinc-300 shadow-inner">
               Page {pagination.page} of {pagination.totalPages}
             </div>
             <Button
@@ -550,7 +550,7 @@ export default function ProblemsClient({
               size="sm"
               onClick={() => updateQuery({ page: String(pagination.page + 1) })}
               disabled={pagination.page >= pagination.totalPages}
-              className="flex items-center gap-1 border-zinc-800 hover:bg-zinc-900"
+              className="flex items-center gap-1"
             >
               Next
               <ChevronRight className="h-4 w-4" />
@@ -561,105 +561,116 @@ export default function ProblemsClient({
 
       {/* CREATE / EDIT FORM DIALOG */}
       <Dialog open={formOpen} onOpenChange={setFormOpen}>
-        <DialogContent className="max-w-lg">
+        <DialogContent className="max-w-xl">
           <DialogHeader>
             <DialogTitle>
-              {formMode === "create" ? "Add Practice Problem" : "Edit Problem Metadata"}
+              {formMode === "create" ? "Add Problem Record" : "Edit Problem Record"}
             </DialogTitle>
             <DialogDescription>
-              Assign the problem to a subtopic and configure metadata parameters.
+              Provide catalog details. Duplicates by Codeforces link are ignored in validation.
             </DialogDescription>
           </DialogHeader>
-          <form onSubmit={handleFormSubmit}>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-4">
-              {/* Syllabus Subtopic select */}
-              <div className="space-y-2 sm:col-span-2">
-                <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider block" htmlFor="subtopic">
-                  Subtopic Syllabus Target
-                </label>
-                <select
-                  id="subtopic"
-                  value={subTopicId}
-                  onChange={(e) => setSubTopicId(e.target.value)}
-                  className="w-full h-10 rounded-lg border border-zinc-800 bg-zinc-950/40 px-3 text-sm text-zinc-300 focus-visible:outline-none focus:border-zinc-500"
-                  required
-                >
-                  <option value="" disabled>Select Subtopic</option>
-                  {topics.map((t) => (
-                    <optgroup key={t.id} label={t.name}>
-                      {t.subTopics.map((st) => (
-                        <option key={st.id} value={st.id}>
-                          {t.name} → {st.name}
-                        </option>
-                      ))}
-                    </optgroup>
-                  ))}
-                </select>
-              </div>
 
-              {/* Name */}
-              <div className="space-y-2">
-                <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider block" htmlFor="pname">
+          <form onSubmit={handleFormSubmit}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-4 max-h-[70vh] overflow-y-auto pr-1">
+              <div className="space-y-2 col-span-2">
+                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block pl-1" htmlFor="pname">
                   Problem Name
                 </label>
                 <Input
                   id="pname"
                   type="text"
-                  placeholder="e.g. Kefa and First Steps"
+                  placeholder="E.g. Fedor and New Game"
                   value={problemName}
                   onChange={(e) => setProblemName(e.target.value)}
                   required
                 />
               </div>
 
-              {/* Rating */}
-              <div className="space-y-2">
-                <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider block" htmlFor="prating">
+              <div className="space-y-2 col-span-2 sm:col-span-1">
+                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block pl-1">
+                  Syllabus Parent Topic
+                </label>
+                <select
+                  value={filters.topicId}
+                  onChange={(e) => { /* Helper logic for parent topic selection */ }}
+                  className="w-full h-10 rounded-xl border border-white/8 bg-black/25 px-3 text-sm text-zinc-300 focus-visible:outline-none focus:border-[#ff6a3d] focus:ring-2 focus:ring-[#ff6a3d]/15 transition-all duration-200 cursor-pointer"
+                  required
+                >
+                  <option value="">Select Parent Topic...</option>
+                  {topics.map((t) => (
+                    <option key={t.id} value={t.id}>
+                      {t.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="space-y-2 col-span-2 sm:col-span-1">
+                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block pl-1">
+                  Syllabus Subtopic
+                </label>
+                <select
+                  value={subTopicId}
+                  onChange={(e) => setSubTopicId(e.target.value)}
+                  className="w-full h-10 rounded-xl border border-white/8 bg-black/25 px-3 text-sm text-zinc-300 focus-visible:outline-none focus:border-[#ff6a3d] focus:ring-2 focus:ring-[#ff6a3d]/15 transition-all duration-200 cursor-pointer"
+                  required
+                >
+                  <option value="">Select Subtopic...</option>
+                  {topics.map((t) => (
+                    <optgroup key={t.id} label={t.name}>
+                      {t.subTopics.map((st) => (
+                        <option key={st.id} value={st.id}>{st.name}</option>
+                      ))}
+                    </optgroup>
+                  ))}
+                </select>
+              </div>
+
+              <div className="space-y-2 col-span-2 sm:col-span-1">
+                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block pl-1" htmlFor="prating">
                   Codeforces Rating
                 </label>
                 <Input
                   id="prating"
                   type="number"
-                  placeholder="800, 1200, 1600..."
+                  placeholder="1200"
                   value={rating}
                   onChange={(e) => setRating(e.target.value)}
                   required
                 />
               </div>
 
-              {/* Main Topic */}
-              <div className="space-y-2">
-                <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider block" htmlFor="pmaintopic">
-                  Main Tag / Topic
+              <div className="space-y-2 col-span-2 sm:col-span-1">
+                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block pl-1" htmlFor="ptopic">
+                  Main Topic
                 </label>
                 <Input
-                  id="pmaintopic"
+                  id="ptopic"
                   type="text"
-                  placeholder="e.g. Graphs, Greedy, DP"
+                  placeholder="E.g. Bitmask DP"
                   value={mainTopic}
                   onChange={(e) => setMainTopic(e.target.value)}
                   required
                 />
               </div>
 
-              {/* Hidden Pattern */}
-              <div className="space-y-2">
-                <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider block" htmlFor="phidden">
-                  Hidden Observation Pattern
+              <div className="space-y-2 col-span-2">
+                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block pl-1" htmlFor="ppattern">
+                  Hidden Pattern (Optional)
                 </label>
                 <Input
-                  id="phidden"
+                  id="ppattern"
                   type="text"
-                  placeholder="e.g. Bitmask DP, Binary Search over answer"
+                  placeholder="E.g. Bitwise XOR submask propagation state"
                   value={hiddenPattern}
                   onChange={(e) => setHiddenPattern(e.target.value)}
                 />
               </div>
 
-              {/* Link */}
-              <div className="space-y-2 sm:col-span-2">
-                <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider block" htmlFor="plink">
-                  Codeforces URL (Must be Unique)
+              <div className="space-y-2 col-span-2">
+                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block pl-1" htmlFor="plink">
+                  Codeforces Problem Link
                 </label>
                 <Input
                   id="plink"
@@ -671,131 +682,111 @@ export default function ProblemsClient({
                 />
               </div>
 
-              {/* Notes */}
-              <div className="space-y-2 sm:col-span-2">
-                <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider block" htmlFor="pnotes">
-                  Internal Notes (Optional)
+              <div className="space-y-2 col-span-2">
+                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block pl-1" htmlFor="pnotes">
+                  Problem Notes (Optional)
                 </label>
                 <Textarea
                   id="pnotes"
-                  placeholder="Insert problem solutions, formulas, key concepts..."
+                  placeholder="Key concepts, tricks, complexity analysis..."
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
-                  className="min-h-[70px]"
                 />
               </div>
             </div>
+
             <DialogFooter>
               <Button type="button" variant="outline" onClick={() => setFormOpen(false)}>
                 Cancel
               </Button>
-              <Button type="submit" className="bg-indigo-650 hover:bg-indigo-700 text-white">
-                {formMode === "create" ? "Create Problem" : "Save Changes"}
+              <Button type="submit" className="glass-btn-primary">
+                {formMode === "create" ? "Add Problem" : "Save Changes"}
               </Button>
             </DialogFooter>
           </form>
         </DialogContent>
       </Dialog>
 
-      {/* CSV UPLOAD DIALOG */}
+      {/* CSV UPLOAD MODAL */}
       <Dialog open={csvOpen} onOpenChange={setCsvOpen}>
-        <DialogContent className="max-w-xl">
+        <DialogContent className="max-w-lg">
           <DialogHeader>
-            <DialogTitle>Ingest CSV problem manual list</DialogTitle>
+            <DialogTitle className="flex items-center gap-2">
+              <Upload className="h-5 w-5 text-[#5b8cff]" />
+              Upload Problems CSV
+            </DialogTitle>
             <DialogDescription>
-              Validate required columns: <strong>Problem, Rating, Main Topic, Hidden Pattern, Link</strong>. Duplicate Links will be skipped.
+              Select syllabus node destination and parse columns from Codeforces template.
             </DialogDescription>
           </DialogHeader>
-          
+
           <form onSubmit={handleCSVUploadSubmit}>
             <div className="space-y-4 py-4">
-              {/* Select target subtopic */}
               <div className="space-y-2">
-                <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider block" htmlFor="csvsub">
-                  Assign All New Problems to Subtopic
+                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block pl-1">
+                  Destination Subtopic
                 </label>
                 <select
-                  id="csvsub"
                   value={csvSubTopicId}
                   onChange={(e) => setCsvSubTopicId(e.target.value)}
-                  className="w-full h-10 rounded-lg border border-zinc-800 bg-zinc-950/40 px-3 text-sm text-zinc-300 focus-visible:outline-none focus:border-zinc-500"
+                  className="w-full h-10 rounded-xl border border-white/8 bg-black/25 px-3 text-sm text-zinc-300 focus-visible:outline-none focus:border-[#ff6a3d] focus:ring-2 focus:ring-[#ff6a3d]/15 transition-all duration-200 cursor-pointer"
                   required
                 >
-                  <option value="" disabled>Select Target Subtopic</option>
+                  <option value="">Select Subtopic...</option>
                   {topics.map((t) => (
                     <optgroup key={t.id} label={t.name}>
                       {t.subTopics.map((st) => (
-                        <option key={st.id} value={st.id}>
-                          {t.name} → {st.name}
-                        </option>
+                        <option key={st.id} value={st.id}>{st.name}</option>
                       ))}
                     </optgroup>
                   ))}
                 </select>
               </div>
 
-              {/* Upload input */}
               <div className="space-y-2">
-                <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider block" htmlFor="csvfile">
-                  CSV Data File
+                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block pl-1">
+                  Upload CSV File
                 </label>
-                <input
-                  id="csvfile"
-                  type="file"
-                  accept=".csv"
-                  onChange={handleFileChange}
-                  className="flex h-10 w-full rounded-lg border border-zinc-800 bg-zinc-950/40 px-3 py-1.5 text-sm file:border-0 file:bg-zinc-800 file:text-zinc-200 file:text-xs file:font-semibold file:rounded-md file:mr-4 file:px-2.5 file:py-1 hover:file:bg-zinc-700 cursor-pointer"
-                  required={!uploadResults}
-                />
-              </div>
-
-              {/* Upload results viewer */}
-              {uploadResults && (
-                <div className="rounded-lg border border-zinc-800 bg-zinc-950/40 p-4 space-y-3 animate-in fade-in-50">
-                  <div className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Upload Results Summary</div>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs">
-                    <div className="bg-zinc-900/60 p-2.5 rounded-lg border border-zinc-850">
-                      <div className="text-zinc-500">Total Rows</div>
-                      <div className="text-base font-bold text-zinc-200 mt-0.5">{uploadResults.totalRows}</div>
-                    </div>
-                    <div className="bg-zinc-900/60 p-2.5 rounded-lg border border-zinc-850">
-                      <div className="text-zinc-550">Added</div>
-                      <div className="text-base font-bold text-emerald-400 mt-0.5">{uploadResults.added}</div>
-                    </div>
-                    <div className="bg-zinc-900/60 p-2.5 rounded-lg border border-zinc-850">
-                      <div className="text-zinc-550">Skipped (Dup)</div>
-                      <div className="text-base font-bold text-amber-500 mt-0.5">{uploadResults.skipped}</div>
-                    </div>
-                    <div className="bg-zinc-900/60 p-2.5 rounded-lg border border-zinc-850">
-                      <div className="text-zinc-550">Invalid</div>
-                      <div className="text-base font-bold text-red-400 mt-0.5">{uploadResults.invalidRows}</div>
+                <div className="border-2 border-dashed border-white/8 rounded-2xl p-6 bg-black/25 hover:bg-black/35 hover:border-[#ff6a3d]/30 transition-all duration-200 text-center relative">
+                  <input
+                    type="file"
+                    accept=".csv"
+                    onChange={handleFileChange}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    disabled={uploading}
+                  />
+                  <div className="space-y-1.5 pointer-events-none">
+                    <Upload className="h-8 w-8 text-zinc-555 mx-auto" />
+                    <div className="text-xs font-bold text-zinc-200">
+                      Click to browse or drop CSV here
                     </div>
                   </div>
+                </div>
+              </div>
 
-                  {/* Errors report */}
-                  {uploadResults.errors && uploadResults.errors.length > 0 && (
-                    <div className="mt-2 space-y-1">
-                      <div className="text-[10px] font-bold text-red-400 uppercase tracking-wider flex items-center gap-1">
-                        <AlertTriangle className="h-3.5 w-3.5" />
-                        Warnings / Validation Errors ({uploadResults.errors.length})
-                      </div>
-                      <div className="max-h-28 overflow-y-auto text-[10px] text-zinc-400 bg-zinc-950 p-2 rounded font-mono space-y-1">
-                        {uploadResults.errors.map((err: string, idx: number) => (
-                          <div key={idx}>{err}</div>
-                        ))}
-                      </div>
+              {uploadResults && (
+                <div className="rounded-2xl border border-white/6 bg-black/35 p-4 space-y-3 animate-in fade-in-50">
+                  <div className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Upload Results Summary</div>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs">
+                    <div className="bg-white/3 p-2.5 rounded-xl border border-white/5">
+                      <div className="text-zinc-500 font-bold uppercase text-[9px] tracking-wider">Added</div>
+                      <div className="text-base font-extrabold text-emerald-400 mt-0.5">{uploadResults.added}</div>
                     </div>
-                  )}
+                    <div className="bg-white/3 p-2.5 rounded-xl border border-white/5">
+                      <div className="text-zinc-500 font-bold uppercase text-[9px] tracking-wider">Skipped</div>
+                      <div className="text-base font-extrabold text-amber-450 mt-0.5">{uploadResults.skipped}</div>
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
 
             <DialogFooter>
               <Button type="button" variant="outline" onClick={() => setCsvOpen(false)} disabled={uploading}>
-                {uploadResults ? "Close" : "Cancel"}
+                Cancel
               </Button>
-              <Button type="submit" disabled={uploading} className="bg-indigo-650 hover:bg-indigo-700 text-white">
-                {uploading ? "Parsing &amp; Importing..." : "Start Import"}
+              <Button type="submit" disabled={uploading} className="glass-btn-primary">
+                {uploading ? "Parsing & Importing..." : "Start Import"}
               </Button>
             </DialogFooter>
           </form>
@@ -808,16 +799,12 @@ export default function ProblemsClient({
           <DialogHeader>
             <DialogTitle className="text-red-400">Delete Problem</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete this problem record? This action is permanent.
+              Are you sure you want to delete this record?
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter className="mt-4">
-            <Button type="button" variant="outline" onClick={() => setDeleteOpen(false)}>
-              Cancel
-            </Button>
-            <Button type="button" variant="destructive" onClick={handleDeleteExecute}>
-              Delete
-            </Button>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setDeleteOpen(false)}>Cancel</Button>
+            <Button variant="destructive" onClick={handleDeleteExecute}>Delete</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -826,18 +813,14 @@ export default function ProblemsClient({
       <Dialog open={bulkDeleteOpen} onOpenChange={setBulkDeleteOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle className="text-red-400">Bulk Delete Problems</DialogTitle>
+            <DialogTitle className="text-red-400">Bulk Delete</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete the <strong>{selectedIds.length}</strong> selected problems? This cannot be undone.
+              Delete <strong>{selectedIds.length}</strong> items?
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter className="mt-4">
-            <Button type="button" variant="outline" onClick={() => setBulkDeleteOpen(false)}>
-              Cancel
-            </Button>
-            <Button type="button" variant="destructive" onClick={handleBulkDeleteExecute}>
-              Delete All
-            </Button>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setBulkDeleteOpen(false)}>Cancel</Button>
+            <Button variant="destructive" onClick={handleBulkDeleteExecute}>Delete All</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

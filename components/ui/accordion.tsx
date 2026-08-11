@@ -74,7 +74,13 @@ export function AccordionItem({ value, className, children }: AccordionItemProps
   const isOpen = openItems.includes(value);
 
   return (
-    <div className={cn("border border-white/5 bg-white/2 rounded-xl overflow-hidden transition-all duration-300", className)}>
+    <div
+      className={cn(
+        "rounded-2xl glass-2 glass-reflect overflow-hidden transition-all duration-350",
+        isOpen && "shadow-[0_12px_40px_rgba(0,0,0,0.35),0_0_30px_rgba(98,92,255,0.04)]",
+        className
+      )}
+    >
       {React.Children.map(children, (child) => {
         if (React.isValidElement(child)) {
           return React.cloneElement(child, {
@@ -100,15 +106,16 @@ export function AccordionTrigger({
       type="button"
       onClick={onClick}
       className={cn(
-        "flex w-full items-center justify-between px-5 py-4 text-left font-semibold text-zinc-200 hover:text-white transition-all duration-205 hover:bg-white/3 cursor-pointer",
+        "flex w-full items-center justify-between px-5 py-4 text-left font-semibold text-zinc-200 hover:text-white transition-all duration-250 hover:bg-white/3 cursor-pointer",
+        isOpen && "bg-white/2",
         className
       )}
     >
       {children}
       <ChevronDown
         className={cn(
-          "h-4 w-4 text-zinc-400 transition-transform duration-200 ease-in-out",
-          isOpen && "rotate-180 text-zinc-100"
+          "h-4 w-4 text-zinc-500 transition-all duration-300 ease-out shrink-0",
+          isOpen && "rotate-180 text-zinc-200"
         )}
       />
     </button>
@@ -123,8 +130,10 @@ export function AccordionContent({
   return (
     <div
       className={cn(
-        "transition-all duration-300 ease-in-out overflow-hidden border-t border-white/5",
-        isOpen ? "max-h-[5000px] opacity-100 p-5 bg-white/1" : "max-h-0 opacity-0 p-0 pointer-events-none"
+        "transition-all duration-350 ease-out overflow-hidden",
+        isOpen
+          ? "max-h-[5000px] opacity-100 p-5 border-t border-white/5 bg-white/1"
+          : "max-h-0 opacity-0 p-0 pointer-events-none"
       )}
     >
       <div className={className}>{children}</div>

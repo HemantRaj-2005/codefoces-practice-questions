@@ -62,15 +62,17 @@ function Toaster() {
   const { toasts, removeToast } = useToast();
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 w-full max-w-sm pointer-events-none">
+    <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2.5 w-full max-w-sm pointer-events-none">
       {toasts.map((t) => (
         <div
           key={t.id}
           className={cn(
-            "flex w-full items-start gap-3 rounded-xl border p-4 shadow-2xl backdrop-blur-xl transition-all duration-300 pointer-events-auto animate-in slide-in-from-bottom-5",
-            t.type === "success" && "border-emerald-500/20 bg-emerald-950/40 text-emerald-200 shadow-[0_8px_30px_rgba(16,185,129,0.15)]",
-            t.type === "error" && "border-red-500/20 bg-red-950/40 text-red-200 shadow-[0_8px_30px_rgba(239,68,68,0.15)]",
-            (t.type === "info" || !t.type) && "border-blue-500/20 bg-blue-950/40 text-blue-200 shadow-[0_8px_30px_rgba(59,130,246,0.15)]"
+            "flex w-full items-start gap-3 rounded-2xl border p-4 transition-all duration-300 pointer-events-auto animate-in slide-in-from-bottom-5",
+            "backdrop-blur-2xl",
+            "shadow-[0_16px_48px_rgba(0,0,0,0.40),inset_0_1px_0_rgba(255,255,255,0.08)]",
+            t.type === "success" && "border-emerald-500/15 bg-emerald-950/30 text-emerald-200 shadow-[0_16px_48px_rgba(0,0,0,0.40),0_0_40px_rgba(16,185,129,0.10)]",
+            t.type === "error" && "border-red-500/15 bg-red-950/30 text-red-200 shadow-[0_16px_48px_rgba(0,0,0,0.40),0_0_40px_rgba(239,68,68,0.10)]",
+            (t.type === "info" || !t.type) && "border-blue-500/15 bg-blue-950/30 text-blue-200 shadow-[0_16px_48px_rgba(0,0,0,0.40),0_0_40px_rgba(59,130,246,0.10)]"
           )}
         >
           {t.type === "success" && <CheckCircle className="h-5 w-5 text-emerald-400 shrink-0 mt-0.5" />}
@@ -84,7 +86,7 @@ function Toaster() {
           
           <button
             onClick={() => removeToast(t.id)}
-            className="text-zinc-400 hover:text-zinc-100 transition-colors"
+            className="text-zinc-500 hover:text-zinc-100 transition-colors rounded-lg p-0.5 hover:bg-white/5"
           >
             <X className="h-4 w-4" />
           </button>

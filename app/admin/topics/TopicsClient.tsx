@@ -239,14 +239,14 @@ export default function TopicsClient({ initialTopics }: TopicsClientProps) {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-white">Topics &amp; Subtopics</h1>
+          <h1 className="text-2xl font-extrabold tracking-tight text-white">Topics &amp; Subtopics</h1>
           <p className="text-xs text-zinc-400 mt-1">
             Build and order the training blueprint manual structures.
           </p>
         </div>
         <Button
           onClick={openCreateTopic}
-          className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium flex items-center gap-2 self-start sm:self-auto"
+          className="glass-btn-primary flex items-center gap-2 self-start sm:self-auto"
         >
           <Plus className="h-4 w-4" />
           Create Topic
@@ -258,24 +258,27 @@ export default function TopicsClient({ initialTopics }: TopicsClientProps) {
           {topics.map((topic) => {
             const isCollapsed = collapsedTopics[topic.id] !== false;
             return (
-              <Card key={topic.id}>
+              <Card 
+                key={topic.id}
+                className="glass-2 border border-white/8 relative overflow-hidden shadow-lg hover:border-white/12 transition-all duration-300"
+              >
                 <CardHeader 
-                  className="border-b border-white/5 p-5 flex flex-row items-center justify-between cursor-pointer hover:bg-white/1 transition-all select-none"
+                  className="border-b border-white/6 p-5 flex flex-row items-center justify-between cursor-pointer hover:bg-white/2 transition-all select-none"
                   onClick={() => toggleTopicCollapse(topic.id)}
                 >
                   <div className="flex items-center gap-3">
                     <ChevronDown
                       className={cn(
-                        "h-4 w-4 text-zinc-400 transition-transform duration-200 shrink-0",
+                        "h-4 w-4 text-zinc-450 transition-transform duration-250 shrink-0",
                         isCollapsed && "-rotate-90 text-zinc-500"
                       )}
                     />
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 border border-white/8">
-                      <BookOpen className="h-4 w-4 text-indigo-400" />
+                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/4 border border-white/8 shadow-sm">
+                      <BookOpen className="h-4.5 w-4.5 text-[#9b6dff] drop-shadow-[0_0_8px_rgba(155,110,255,0.2)]" />
                     </div>
                     <div>
                       <CardTitle className="text-base font-bold text-white">{topic.name}</CardTitle>
-                      <span className="text-[10px] text-zinc-500 font-semibold mt-1 block">Order: {topic.order}</span>
+                      <span className="text-[10px] text-zinc-450 font-bold mt-1.5 block uppercase tracking-widest">Order: {topic.order}</span>
                     </div>
                   </div>
 
@@ -284,7 +287,7 @@ export default function TopicsClient({ initialTopics }: TopicsClientProps) {
                       variant="outline"
                       size="sm"
                       onClick={() => openCreateSubTopic(topic)}
-                      className="flex items-center gap-1 text-zinc-300"
+                      className="flex items-center gap-1"
                     >
                       <Plus className="h-3.5 w-3.5" />
                       Add Subtopic
@@ -293,15 +296,13 @@ export default function TopicsClient({ initialTopics }: TopicsClientProps) {
                       variant="outline"
                       size="icon"
                       onClick={() => openEditTopic(topic)}
-                      className="text-zinc-400 hover:text-white"
                     >
                       <Edit2 className="h-3.5 w-3.5" />
                     </Button>
                     <Button
-                      variant="outline"
+                      variant="destructive"
                       size="icon"
                       onClick={() => confirmDeleteTopic(topic)}
-                      className="text-red-400 hover:text-red-300"
                     >
                       <Trash2 className="h-3.5 w-3.5" />
                     </Button>
@@ -313,21 +314,21 @@ export default function TopicsClient({ initialTopics }: TopicsClientProps) {
                     isCollapsed ? "max-h-0 opacity-0 pointer-events-none" : "max-h-[5000px] opacity-100"
                   )}
                 >
-                  <CardContent className="p-5">
+                  <CardContent className="p-5 bg-black/10">
                     {topic.subTopics.length > 0 ? (
                       <div className="space-y-3">
-                        <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest flex items-center gap-2 mb-1">
-                          <Layers className="h-3 w-3" />
+                        <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest flex items-center gap-2 mb-1.5 pl-1">
+                          <Layers className="h-3 w-3 text-[#5b8cff]" />
                           Subtopics
                         </div>
                         {topic.subTopics.map((sub) => (
                           <div
                             key={sub.id}
-                            className="flex items-center justify-between p-3.5 rounded-xl border border-white/5 bg-white/2"
+                            className="flex items-center justify-between p-3.5 rounded-2xl border border-white/6 bg-white/2 hover:bg-white/4 transition-colors duration-200 shadow-sm"
                           >
-                            <div className="flex items-center gap-2">
-                              <span className="text-sm text-zinc-200 font-medium">{sub.name}</span>
-                              <span className="text-[9px] bg-white/5 border border-white/8 text-zinc-400 px-1.5 py-0.5 rounded font-mono">
+                            <div className="flex items-center gap-2.5">
+                              <span className="text-sm text-zinc-200 font-bold">{sub.name}</span>
+                              <span className="text-[9px] bg-white/4 border border-white/8 text-zinc-400 px-2 py-0.5 rounded-lg font-mono font-semibold">
                                 Order {sub.order}
                               </span>
                             </div>
@@ -336,7 +337,7 @@ export default function TopicsClient({ initialTopics }: TopicsClientProps) {
                                 variant="ghost"
                                 size="icon"
                                 onClick={() => openEditSubTopic(topic, sub)}
-                                className="h-8 w-8 text-zinc-400 hover:text-white hover:bg-white/5"
+                                className="h-8 w-8 text-zinc-450 hover:text-white hover:bg-white/5"
                               >
                                 <Edit2 className="h-3.5 w-3.5" />
                               </Button>
@@ -353,7 +354,7 @@ export default function TopicsClient({ initialTopics }: TopicsClientProps) {
                         ))}
                       </div>
                     ) : (
-                      <div className="text-center py-6 border border-dashed border-white/8 rounded-xl bg-white/1 text-zinc-500 text-xs">
+                      <div className="text-center py-8 border border-dashed border-white/8 rounded-2xl bg-white/1 text-zinc-500 text-xs font-semibold">
                         No subtopics added yet. Click &quot;Add Subtopic&quot; to populate.
                       </div>
                     )}
@@ -364,9 +365,9 @@ export default function TopicsClient({ initialTopics }: TopicsClientProps) {
           })}
         </div>
       ) : (
-        <Card className="border-zinc-800 bg-zinc-950/20 border-dashed py-16 text-center">
+        <div className="glass-2 border-dashed border-white/8 py-16 text-center rounded-2xl relative overflow-hidden glass-reflect shadow-md">
           <div className="max-w-xs mx-auto space-y-4">
-            <div className="h-12 w-12 rounded-full border border-zinc-850 flex items-center justify-center text-zinc-500 mx-auto">
+            <div className="h-12 w-12 rounded-full border border-white/8 flex items-center justify-center text-zinc-500 mx-auto bg-white/3">
               <BookOpen className="h-6 w-6" />
             </div>
             <div>
@@ -376,7 +377,7 @@ export default function TopicsClient({ initialTopics }: TopicsClientProps) {
               </p>
             </div>
           </div>
-        </Card>
+        </div>
       )}
 
       {/* TOPIC CREATE/EDIT MODAL */}
@@ -391,7 +392,7 @@ export default function TopicsClient({ initialTopics }: TopicsClientProps) {
           <form onSubmit={handleTopicSubmit}>
             <div className="space-y-4 py-4">
               <div className="space-y-2">
-                <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider block" htmlFor="tname">
+                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block pl-1" htmlFor="tname">
                   Topic Name
                 </label>
                 <Input
@@ -404,7 +405,7 @@ export default function TopicsClient({ initialTopics }: TopicsClientProps) {
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider block" htmlFor="torder">
+                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block pl-1" htmlFor="torder">
                   Order Index
                 </label>
                 <Input
@@ -421,7 +422,7 @@ export default function TopicsClient({ initialTopics }: TopicsClientProps) {
               <Button type="button" variant="outline" onClick={() => setTopicModalOpen(false)}>
                 Cancel
               </Button>
-              <Button type="submit" className="bg-indigo-650 hover:bg-indigo-700 text-white">
+              <Button type="submit" className="glass-btn-primary">
                 {modalMode === "create" ? "Create Topic" : "Save Changes"}
               </Button>
             </DialogFooter>
@@ -445,7 +446,7 @@ export default function TopicsClient({ initialTopics }: TopicsClientProps) {
           <form onSubmit={handleSubTopicSubmit}>
             <div className="space-y-4 py-4">
               <div className="space-y-2">
-                <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider block" htmlFor="stname">
+                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block pl-1" htmlFor="stname">
                   Subtopic Name
                 </label>
                 <Input
@@ -458,7 +459,7 @@ export default function TopicsClient({ initialTopics }: TopicsClientProps) {
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider block" htmlFor="storder">
+                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block pl-1" htmlFor="storder">
                   Order Index
                 </label>
                 <Input
@@ -475,7 +476,7 @@ export default function TopicsClient({ initialTopics }: TopicsClientProps) {
               <Button type="button" variant="outline" onClick={() => setSubTopicModalOpen(false)}>
                 Cancel
               </Button>
-              <Button type="submit" className="bg-indigo-650 hover:bg-indigo-700 text-white">
+              <Button type="submit" className="glass-btn-primary">
                 {modalMode === "create" ? "Add Subtopic" : "Save Changes"}
               </Button>
             </DialogFooter>

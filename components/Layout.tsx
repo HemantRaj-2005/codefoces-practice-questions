@@ -4,6 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { motion } from "motion/react";
 import {
   LayoutDashboard,
   BookOpen,
@@ -59,74 +60,130 @@ export function SidebarLayout({
     await logout();
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.08,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 15, scale: 0.95 },
+    show: { 
+      opacity: 1, 
+      y: 0, 
+      scale: 1,
+      transition: {
+        type: "spring" as const,
+        stiffness: 260,
+        damping: 22,
+      }
+    },
+  };
+
   const SidebarContent = () => (
-    <div className="flex flex-col h-full glass-2 border-r border-white/5 p-6">
+    <div className="flex flex-col h-full glass-2 border-r border-white/5 p-6 relative overflow-hidden glass-reflect">
+      {/* Background ambient element inside sidebar */}
+      <div className="absolute -top-[10%] -left-[10%] w-[120%] h-[40%] rounded-full bg-[#625cff]/5 blur-[60px] pointer-events-none" />
+
       {/* Title */}
-      <div className="flex items-center gap-3 mb-8">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-[#625cff] to-[#ff542f] shadow-lg shadow-[#625cff]/20">
+      <motion.div 
+        className="flex items-center gap-3 mb-8 relative z-10"
+        initial={{ opacity: 0, x: -10 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ type: "spring", stiffness: 200, damping: 18 }}
+      >
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-[#625cff] to-[#ff542f] shadow-lg shadow-[#625cff]/20 hover:scale-105 active:scale-95 transition-transform duration-200 cursor-pointer">
           <Activity className="h-5 w-5 text-white" />
         </div>
         <div>
           <h1 className="font-bold text-white tracking-tight leading-none text-sm">CF Practice</h1>
-          <span className="text-[9px] text-[#ff542f] font-bold tracking-widest uppercase mt-0.5 block">Tracker</span>
+          <span className="text-[9px] text-[#ff6a3d] font-extrabold tracking-widest uppercase mt-0.5 block">Tracker</span>
         </div>
-      </div>
+      </motion.div>
 
       {/* Navigation */}
-      <nav className="flex-1 space-y-2">
+      <motion.nav 
+        className="flex-1 space-y-2 relative z-10"
+        variants={containerVariants}
+        initial="hidden"
+        animate="show"
+      >
         {navigation.map((item) => {
           const isActive = pathname === item.href;
           return (
-            <Link
-              key={item.name}
-              href={item.href}
-              onClick={() => setMobileOpen(false)}
-              className={cn(
-                "flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-200",
-                isActive
-                  ? "bg-[#ff542f]/8 border border-[#ff542f]/20 text-white shadow-[0_4px_20px_rgba(255,84,47,0.12),inset_0_1px_0_rgba(255,255,255,0.1)]"
-                  : "text-zinc-400 hover:bg-white/4 hover:text-white"
-              )}
-            >
-              <item.icon className={cn("h-4 w-4 shrink-0 transition-colors", isActive ? "text-[#ff542f]" : "text-zinc-400")} />
-              {item.name}
-            </Link>
+            <motion.div key={item.name} variants={itemVariants}>
+              <Link
+                href={item.href}
+                onClick={() => setMobileOpen(false)}
+                className={cn(
+                  "flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-300 relative group overflow-hidden cursor-pointer",
+                  isActive
+                    ? "bg-[#ff542f]/8 border border-[#ff542f]/20 text-white shadow-[0_4px_20px_rgba(255,84,47,0.12),inset_0_1px_0_rgba(255,255,255,0.1)]"
+                    : "text-zinc-400 hover:bg-white/4 hover:text-white border border-transparent"
+                )}
+              >
+                {isActive && (
+                  <motion.div
+                    className="absolute left-0 top-0 bottom-0 w-1 bg-[#ff542f]"
+                    layoutId="activeNavIndicator"
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  />
+                )}
+                <item.icon className={cn("h-4 w-4 shrink-0 transition-all duration-300 group-hover:scale-110", isActive ? "text-[#ff542f] drop-shadow-[0_0_8px_rgba(255,84,47,0.4)]" : "text-zinc-400")} />
+                {item.name}
+              </Link>
+            </motion.div>
           );
         })}
-      </nav>
+      </motion.nav>
 
       {/* Progress Widget */}
       {overallProgress.total > 0 && (
-        <div className="rounded-xl glass-1 p-4 mb-6">
+        <motion.div 
+          className="rounded-2xl glass-1 p-4 mb-6 relative z-10 overflow-hidden border border-white/8 shadow-md"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.3 }}
+          whileHover={{ y: -2, transition: { duration: 0.2 } }}
+        >
           <div className="flex justify-between items-end mb-2">
-            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Overall Progress</span>
-            <span className="text-xs font-bold text-zinc-150">{overallProgress.percentage}%</span>
+            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Overall Progress</span>
+            <span className="text-xs font-bold text-[#ffbe3c]">{overallProgress.percentage}%</span>
           </div>
           <Progress value={overallProgress.percentage} className="mb-2 h-1.5" />
-          <div className="text-[10px] text-zinc-500">
-            {overallProgress.completed} of {overallProgress.total} problems solved
+          <div className="text-[10px] text-zinc-400">
+            {overallProgress.completed} of {overallProgress.total} solved
           </div>
-        </div>
+        </motion.div>
       )}
 
       {/* Footer Profile / Session info */}
-      <div className="pt-4 border-t border-white/5">
+      <motion.div 
+        className="pt-4 border-t border-white/5 relative z-10"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.4 }}
+      >
         {adminEmail ? (
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="relative flex h-9 w-9 items-center justify-center rounded-full bg-white/5 border border-white/10">
+          <div className="flex items-center justify-between p-1 rounded-xl bg-white/2 border border-white/5 shadow-inner">
+            <div className="flex items-center gap-3 pl-2">
+              <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-white/5 border border-white/10 shadow-sm">
                 <User className="h-4 w-4 text-zinc-300" />
                 <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-emerald-500 ring-2 ring-zinc-950 animate-pulse" />
               </div>
               <div className="overflow-hidden">
                 <p className="text-xs font-semibold text-white leading-none truncate">Admin</p>
-                <p className="text-[10px] text-zinc-500 truncate mt-0.5">{adminEmail}</p>
+                <p className="text-[9px] text-zinc-500 truncate mt-0.5 max-w-[100px]">{adminEmail}</p>
               </div>
             </div>
             <button
               onClick={handleLogout}
               title="Logout"
-              className="p-2 rounded-lg text-zinc-455 hover:bg-white/5 hover:text-red-400 transition-all duration-200 cursor-pointer"
+              className="p-2 rounded-lg text-zinc-400 hover:bg-red-500/10 hover:text-red-400 transition-all duration-200 cursor-pointer"
             >
               <LogOut className="h-4 w-4" />
             </button>
@@ -134,18 +191,18 @@ export function SidebarLayout({
         ) : (
           <Link
             href="/login"
-            className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-lg border border-white/8 bg-white/3 text-xs font-semibold text-zinc-200 hover:bg-white/6 hover:text-white transition-all duration-200"
+            className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl border border-white/8 bg-white/3 text-xs font-bold text-zinc-200 hover:bg-white/6 hover:text-white hover:border-white/12 transition-all duration-200 shadow-md active:scale-98"
           >
             <LogIn className="h-4 w-4" />
             Admin Login
           </Link>
         )}
-      </div>
+      </motion.div>
     </div>
   );
 
   return (
-    <div className="min-h-screen flex bg-[#0c0d1b] text-zinc-100 font-sans antialiased selection:bg-[#ff542f]/30 selection:text-white">
+    <div className="min-h-screen flex bg-[#080A12] text-zinc-100 font-sans antialiased selection:bg-[#ff542f]/30 selection:text-white">
       {/* Desktop Sidebar (Left) */}
       <aside className="hidden md:flex flex-col w-64 shrink-0 h-screen sticky top-0 z-20">
         <SidebarContent />
@@ -161,7 +218,7 @@ export function SidebarLayout({
           <aside className="relative flex flex-col w-64 max-w-xs h-full z-50">
             <button
               onClick={() => setMobileOpen(false)}
-              className="absolute right-4 top-4 p-2 rounded-lg text-zinc-400 hover:text-white transition-colors z-50"
+              className="absolute right-4 top-4 p-2 rounded-lg text-zinc-400 hover:text-white transition-colors z-50 hover:bg-white/5"
             >
               <X className="h-5 w-5" />
             </button>
@@ -176,7 +233,7 @@ export function SidebarLayout({
         <header className="flex h-16 items-center justify-between px-6 bg-white/2 border-b border-white/5 backdrop-blur-xl sticky top-0 z-20">
           <button
             onClick={() => setMobileOpen(true)}
-            className="flex md:hidden p-2 rounded-lg text-zinc-400 hover:bg-white/5 hover:text-white cursor-pointer"
+            className="flex md:hidden p-2 rounded-lg text-zinc-400 hover:bg-white/5 hover:text-white cursor-pointer transition-all duration-200"
           >
             <Menu className="h-5 w-5" />
           </button>
@@ -195,13 +252,13 @@ export function SidebarLayout({
             {/* Nav controls */}
             <div className="flex items-center gap-4">
               {overallProgress.total > 0 && (
-                <div className="hidden sm:flex items-center gap-3 text-xs bg-white/3 border border-white/8 px-3 py-1.5 rounded-full backdrop-blur-md">
-                  <span className="text-zinc-400">Total Progress:</span>
-                  <span className="font-bold text-[#625cff]">{overallProgress.percentage}%</span>
+                <div className="hidden sm:flex items-center gap-3 text-xs bg-white/3 border border-white/8 px-3.5 py-1.5 rounded-full backdrop-blur-md shadow-md">
+                  <span className="text-zinc-450 font-medium">Total Progress:</span>
+                  <span className="font-bold text-[#625cff] drop-shadow-[0_0_8px_rgba(98,92,255,0.2)]">{overallProgress.percentage}%</span>
                 </div>
               )}
               {adminEmail && (
-                <div className="flex items-center gap-2 border border-[#625cff]/30 bg-[#625cff]/10 px-3 py-1.5 rounded-full text-[11px] font-semibold text-[#716bff] shadow-[0_2px_8px_rgba(98,92,255,0.15)]">
+                <div className="flex items-center gap-2 border border-[#625cff]/25 bg-[#625cff]/10 px-3 py-1.5 rounded-full text-[11px] font-semibold text-[#716bff] shadow-[0_2px_12px_rgba(98,92,255,0.15)]">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#716bff] animate-pulse" />
                   Admin
                 </div>
@@ -212,9 +269,14 @@ export function SidebarLayout({
 
         {/* Content Body */}
         <main className="flex-1 overflow-y-auto p-6 md:p-8">
-          <div className="max-w-7xl mx-auto space-y-8">
+          <motion.div 
+            className="max-w-7xl mx-auto space-y-8"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ type: "spring", stiffness: 220, damping: 20 }}
+          >
             {children}
-          </div>
+          </motion.div>
         </main>
       </div>
     </div>
